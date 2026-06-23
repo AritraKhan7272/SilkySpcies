@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILKY SPICIES | Luxury Hotel & Restaurant | Budbud, West Bengal</title>
+    <style>
+        :root {
+            --bg: #f5f0eb;
+            --surface: #ffffff;
+            --surface2: #faf8f5;
+            --text: #2c1810;
+            --text2: #5a3e36;
+            --gold: #c8943e;
+            --gold2: #a67c2e;
+            --accent: #8b1a1a;
+            --accent2: #6b1010;
+            --border: #e0d5c7;
+            --shadow: 0 4px 24px rgba(0,0,0,0.07);
+            --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+            --glass: rgba(255,255,255,0.65);
+            --glass-border: rgba(255,255,255,0.4);
+            --nav-bg: rgba(44,24,16,0.95);
+            --card-bg: #ffffff;
+            --input-bg: #faf8f5;
+            --success: #2d7a3c;
+            --warning: #c27a1a;
+            --danger: #b5322a;
+            --info: #2a6496;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+            --font-heading: 'Georgia','Times New Roman',serif;
+            --font-body: 'Segoe UI','Inter',system-ui,sans-serif;
+            --pos-table-free: #c8e6c9;
+            --pos-table-occupied: #ffcdd2;
+            --pos-table-ordering: #fff9c4;
+            --pos-table-paid: #e0e0e0;
+            --pos-accent: #ff6f00;
+            --room-available: #c8e6c9;
+            --room-booked: #ffcdd2;
+            --room-maintenance: #ffe0b2;
+            --room-selected: #bbdefb;
+        }
+        .dark-mode {
+            --bg: #1a1410;
+            --surface: #241c16;
+            --surface2: #2a2018;
+            --text: #e8ddd0;
+            --text2: #c4b5a3;
+            --border: #3a2e24;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 12px 48px rgba(0,0,0,0.45);
+            --glass: rgba(36,28,22,0.75);
+            --glass-border: rgba(255,255,255,0.08);
+            --nav-bg: rgba(20,12,8,0.97);
+            --card-bg: #241c16;
+            --input-bg: #2a2018;
+            --pos-table-free: #1a3c22;
+            --pos-table-occupied: #3d1a1a;
+            --pos-table-ordering: #3d2e0a;
+            --pos-table-paid: #2a2a2a;
+            --room-available: #1a3c22;
+            --room-booked: #3d1a1a;
+            --room-maintenance: #3d2e0a;
+            --room-selected: #0a2a3d;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            transition: background var(--transition), color var(--transition);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        ::-webkit-scrollbar { width:8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius:4px; }
+        .top-nav {
+            position: sticky; top:0; z-index:1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding:0 2rem; display:flex; align-items:center; justify-content:space-between;
+            height:64px; border-bottom:2px solid var(--gold); transition: all var(--transition);
+            flex-wrap: wrap;
+        }
+        .nav-brand { display:flex; align-items:center; gap:12px; cursor:pointer; text-decoration:none; }
+        .nav-logo { width:42px; height:42px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:#fff; font-weight:bold; }
+        .nav-title { font-family:var(--font-heading); color:#fff; font-size:1.3rem; letter-spacing:1px; white-space:nowrap; }
+        .nav-title span { color: var(--gold); }
+        .nav-links { display:flex; list-style:none; gap:4px; flex-wrap:wrap; }
+        .nav-links li a {
+            color:#ddd; text-decoration:none; padding:8px 16px; border-radius:20px;
+            transition: all var(--transition); font-size:0.9rem; font-weight:500;
+            white-space:nowrap; cursor:pointer; display:block;
+        }
+        .nav-links li a:hover, .nav-links li a.active {
+            background: var(--gold); color:#1a0f08; font-weight:700;
+            box-shadow: 0 0 20px rgba(200,148,62,0.4);
+        }
+        .nav-links li a.locked { color:#999; }
+        .nav-links li a.locked::after { content:' 🔒'; font-size:0.7rem; }
+        .nav-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+        .btn-icon {
+            width:38px; height:38px; border-radius:50%; border:2px solid var(--gold);
+            background:transparent; color:var(--gold); cursor:pointer; font-size:1.1rem;
+            transition: all var(--transition); display:flex; align-items:center; justify-content:center;
+        }
+        .btn-icon:hover { background:var(--gold); color:#1a0f08; }
+        .btn-logout {
+            background: var(--danger); color:#fff; border:2px solid var(--danger);
+            padding:6px 16px; border-radius:20px; cursor:pointer; font-weight:600;
+            font-size:0.8rem; transition:all var(--transition); white-space:nowrap; display:none;
+        }
+        .btn-logout:hover { background:#8b1a1a; border-color:#8b1a1a; }
+        .btn-logout.visible { display:inline-flex; align-items:center; gap:6px; }
+        .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:8px; }
+        .hamburger span { width:26px; height:3px; background:var(--gold); border-radius:2px; transition:all var(--transition); }
+        .main-container { max-width:1500px; margin:0 auto; padding:1.5rem; min-height:calc(100vh - 64px - 60px); }
+        .page-section { display:none; animation: fadeSlideIn 0.4s ease; }
+        .page-section.active { display:block; }
+        @keyframes fadeSlideIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border:1px solid var(--glass-border); border-radius:var(--radius); padding:1.5rem;
+            box-shadow: var(--shadow); transition: all var(--transition);
+        }
+        .glass-card:hover { box-shadow: var(--shadow-lg); }
+        .btn {
+            display:inline-flex; align-items:center; gap:8px; padding:12px 24px;
+            border-radius:30px; font-weight:600; cursor:pointer; border:none;
+            font-size:0.95rem; transition:all var(--transition); text-decoration:none; letter-spacing:0.5px;
+        }
+        .btn-gold { background: linear-gradient(135deg,#c8943e,#a67c2e); color:#fff; box-shadow:0 4px 16px rgba(200,148,62,0.35); }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow:0 8px 28px rgba(200,148,62,0.5); }
+        .btn-outline { background:transparent; border:2px solid var(--gold); color:var(--gold); }
+        .btn-outline:hover { background:var(--gold); color:#1a0f08; }
+        .btn-accent { background:var(--accent); color:#fff; }
+        .btn-accent:hover { background:var(--accent2); transform:translateY(-2px); }
+        .btn-sm { padding:6px 14px; font-size:0.8rem; border-radius:20px; }
+        .btn-xs { padding:4px 10px; font-size:0.7rem; border-radius:14px; }
+        .btn-success { background:var(--success); color:#fff; }
+        .btn-danger { background:var(--danger); color:#fff; }
+        input, select, textarea {
+            width:100%; padding:10px 14px; border:2px solid var(--border);
+            border-radius:var(--radius-sm); background:var(--input-bg); color:var(--text);
+            font-size:0.9rem; transition:all var(--transition); font-family:var(--font-body);
+        }
+        input:focus, select:focus, textarea:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 4px rgba(200,148,62,0.1); }
+        label { font-weight:600; margin-bottom:4px; display:block; color:var(--text); font-size:0.85rem; }
+        .hero-banner {
+            position:relative; border-radius:var(--radius); overflow:hidden; min-height:450px;
+            display:flex; align-items:center; justify-content:center; text-align:center;
+            background: linear-gradient(135deg,#3a1f0d 0%,#1a0f08 40%,#2c1810 70%,#4a2a15 100%);
+            margin-bottom:2rem;
+        }
+        .hero-overlay { position:absolute; inset:0; background: radial-gradient(ellipse at center, rgba(200,148,62,0.15) 0%, transparent 70%); }
+        .hero-content { position:relative; z-index:2; padding:2rem; max-width:700px; }
+        .hero-content h1 { font-family:var(--font-heading); font-size:3.5rem; color:#fff; letter-spacing:2px; margin-bottom:0.5rem; text-shadow:0 4px 20px rgba(0,0,0,0.5); }
+        .hero-content .tagline { font-size:1.3rem; color:var(--gold); letter-spacing:3px; margin-bottom:1.5rem; font-style:italic; }
+        .hero-badge { display:inline-block; background:var(--gold); color:#1a0f08; padding:6px 18px; border-radius:20px; font-weight:700; font-size:0.85rem; letter-spacing:1px; margin-bottom:1rem; }
+        .highlights-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; margin-bottom:2rem; }
+        .highlight-card { text-align:center; padding:2rem 1.5rem; }
+        .highlight-icon { font-size:3rem; margin-bottom:0.8rem; }
+        .gallery-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1rem; margin-bottom:2rem; }
+        .gallery-img {
+            height:220px; border-radius:var(--radius); background:var(--surface2);
+            display:flex; align-items:center; justify-content:center; font-size:3rem;
+            border:2px solid var(--border); transition: all var(--transition); overflow:hidden; position:relative;
+        }
+        .gallery-img:hover { border-color:var(--gold); transform:scale(1.02); }
+        .gallery-img .img-label { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7); color:#fff; padding:10px; text-align:center; font-weight:600; font-size:0.9rem; }
+        .reviews-scroll { display:flex; gap:1rem; overflow-x:auto; padding:1rem 0; }
+        .review-card { min-width:280px; flex-shrink:0; padding:1.5rem; }
+        .review-stars { color:var(--gold); font-size:1.2rem; }
+        .stage-indicator { display:flex; gap:8px; margin-bottom:2rem; flex-wrap:wrap; justify-content:center; }
+        .stage-dot {
+            width:36px; height:36px; border-radius:50%; background:var(--surface2);
+            border:2px solid var(--border); display:flex; align-items:center; justify-content:center;
+            font-weight:700; font-size:0.8rem; transition: all var(--transition);
+        }
+        .stage-dot.completed { background:var(--success); border-color:var(--success); color:#fff; }
+        .stage-dot.active { background:var(--gold); border-color:var(--gold); color:#1a0f08; box-shadow:0 0 20px rgba(200,148,62,0.5); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{ box-shadow:0 0 20px rgba(200,148,62,0.5); } 50%{ box-shadow:0 0 36px rgba(200,148,62,0.8); } }
+        .member-card { border:2px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; background:var(--surface); transition:all var(--transition); }
+        .member-card:hover { border-color:var(--gold); }
+        .room-card { border:2px solid var(--border); border-radius:var(--radius); padding:1.5rem; cursor:pointer; transition:all var(--transition); text-align:center; background:var(--surface); }
+        .room-card:hover, .room-card.selected { border-color:var(--gold); box-shadow:0 0 24px rgba(200,148,62,0.3); transform:translateY(-4px); }
+        .room-card.selected { background:rgba(200,148,62,0.1); }
+        .room-card.unavailable { opacity:0.55; cursor:not-allowed; border-color:#e0e0e0; background:#f5f5f5; }
+        .dark-mode .room-card.unavailable { background:#1a1a1a; border-color:#333; }
+        .room-availability-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:0.7rem; font-weight:700; margin-top:4px; }
+        .badge-available { background:#d4edda; color:#155724; }
+        .badge-booked { background:#f8d7da; color:#721c24; }
+        .dark-mode .badge-available { background:#1a3c22; color:#7ddf90; }
+        .dark-mode .badge-booked { background:#3d1a1a; color:#e88; }
+        .room-grid-theatre { display:grid; grid-template-columns: repeat(auto-fill, minmax(90px,1fr)); gap:10px; margin:1rem 0; }
+        .room-cell-theatre {
+            aspect-ratio:1; border-radius:var(--radius-sm); display:flex; flex-direction:column;
+            align-items:center; justify-content:center; cursor:pointer; border:3px solid transparent;
+            transition:all var(--transition); font-weight:700; font-size:0.8rem; text-align:center;
+            min-height:80px; position:relative;
+        }
+        .room-cell-theatre.available { background:var(--room-available); border-color:#4caf50; color:#1b5e20; cursor:pointer; }
+        .room-cell-theatre.booked { background:var(--room-booked); border-color:#e53935; color:#b71c1c; cursor:not-allowed; opacity:0.7; }
+        .room-cell-theatre.maintenance { background:var(--room-maintenance); border-color:#ff9800; color:#e65100; cursor:not-allowed; opacity:0.7; }
+        .room-cell-theatre.selected-room { border-color:var(--gold)!important; box-shadow:0 0 20px rgba(200,148,62,0.7); transform:scale(1.06); z-index:2; background:var(--room-selected); }
+        .room-cell-theatre.available:hover { transform:scale(1.04); box-shadow:0 4px 16px rgba(76,175,80,0.4); }
+        .room-cell-theatre .room-emoji { font-size:1.3rem; }
+        .room-cell-theatre .room-num { font-weight:800; font-size:0.85rem; }
+        .room-cell-theatre .room-floor { font-size:0.6rem; opacity:0.8; }
+        .pos-container { display:flex; flex-direction:column; gap:1rem; min-height:75vh; }
+        .pos-topbar { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; padding:0.75rem 1.25rem; background:var(--surface); border-radius:var(--radius); border:2px solid var(--border); justify-content:space-between; }
+        .pos-mode-selector { display:flex; gap:4px; background:var(--surface2); border-radius:28px; padding:4px; }
+        .pos-mode-btn { padding:10px 22px; border-radius:24px; border:none; cursor:pointer; font-weight:600; font-size:0.9rem; transition:all var(--transition); background:transparent; color:var(--text); white-space:nowrap; }
+        .pos-mode-btn.active { background:var(--gold); color:#fff; box-shadow:0 4px 16px rgba(200,148,62,0.4); }
+        .pos-info-badge { display:flex; align-items:center; gap:8px; font-weight:600; font-size:0.9rem; color:var(--text); background:var(--surface2); padding:8px 16px; border-radius:20px; border:1px solid var(--border); }
+        .pos-info-badge .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+        .dot-green { background:var(--success); }
+        .dot-orange { background:var(--warning); animation: pulse 1s infinite; }
+        .dot-red { background:var(--danger); }
+        .pos-main { display:grid; grid-template-columns:280px 1fr 340px; gap:1rem; flex:1; }
+        @media (max-width:1200px) { .pos-main { grid-template-columns:240px 1fr 300px; } }
+        @media (max-width:960px) { .pos-main { grid-template-columns:1fr; grid-template-rows: auto auto auto; } .pos-left{order:2;} .pos-center{order:1;} .pos-right{order:3;} }
+        .pos-left, .pos-center, .pos-right { background:var(--surface); border-radius:var(--radius); border:2px solid var(--border); padding:1rem; overflow-y:auto; max-height:65vh; }
+        .pos-left { display:flex; flex-direction:column; gap:1rem; }
+        .pos-left h4 { font-family:var(--font-heading); text-align:center; color:var(--gold); margin-bottom:0.25rem; font-size:0.95rem; }
+        .table-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        .table-cell { aspect-ratio:1.2; border-radius:var(--radius-sm); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; border:3px solid transparent; transition:all var(--transition); font-weight:700; font-size:0.85rem; position:relative; min-height:70px; text-align:center; }
+        .table-cell.free { background:var(--pos-table-free); border-color:#4caf50; color:#1b5e20; }
+        .table-cell.occupied { background:var(--pos-table-occupied); border-color:#e53935; color:#b71c1c; cursor:pointer; }
+        .table-cell.ordering { background:var(--pos-table-ordering); border-color:#f9a825; color:#5d4037; animation: gentlePulse 2s infinite; }
+        .table-cell.paid { background:var(--pos-table-paid); border-color:#9e9e9e; color:#555; }
+        .table-cell.selected { border-color:var(--gold)!important; box-shadow:0 0 20px rgba(200,148,62,0.6); transform:scale(1.04); z-index:2; }
+        .table-cell .table-emoji { font-size:1.4rem; }
+        .table-cell .table-num { font-size:0.9rem; font-weight:800; }
+        .table-cell .table-status-dot { width:7px; height:7px; border-radius:50%; position:absolute; top:6px; right:8px; }
+        @keyframes gentlePulse { 0%,100%{ box-shadow:0 0 8px rgba(249,168,37,0.4); } 50%{ box-shadow:0 0 20px rgba(249,168,37,0.8); } }
+        .takeaway-card { text-align:center; padding:1rem; border:2px dashed var(--gold); border-radius:var(--radius-sm); cursor:pointer; transition:all var(--transition); background:var(--surface2); }
+        .takeaway-card:hover, .takeaway-card.active { background:rgba(200,148,62,0.1); border-style:solid; box-shadow:0 0 20px rgba(200,148,62,0.3); }
+        .takeaway-card .ta-icon { font-size:2.5rem; }
+        .menu-cat-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:0.75rem; position:sticky; top:0; background:var(--surface); padding:6px 0; z-index:5; }
+        .menu-cat-tab { padding:6px 14px; border-radius:18px; border:2px solid var(--border); background:transparent; cursor:pointer; font-size:0.78rem; font-weight:600; transition:all var(--transition); white-space:nowrap; color:var(--text); }
+        .menu-cat-tab.active, .menu-cat-tab:hover { background:var(--gold); color:#fff; border-color:var(--gold); }
+        .menu-search { margin-bottom:0.75rem; position:sticky; top:44px; z-index:5; background:var(--surface); padding:4px 0; }
+        .menu-search input { border-radius:24px; padding:8px 16px; font-size:0.85rem; }
+        .menu-item-card { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-radius:var(--radius-sm); background:var(--surface2); margin-bottom:5px; cursor:pointer; transition:all var(--transition); border-left:3px solid transparent; gap:8px; }
+        .menu-item-card:hover { border-left-color:var(--gold); background:var(--surface); transform:translateX(2px); }
+        .menu-item-card .item-emoji { font-size:1.5rem; flex-shrink:0; }
+        .menu-item-card .item-info { flex:1; min-width:0; }
+        .menu-item-card .item-name { font-weight:600; font-size:0.85rem; }
+        .menu-item-card .item-cat { font-size:0.7rem; color:var(--text2); }
+        .menu-item-card .item-price { font-weight:700; color:var(--gold); font-size:0.9rem; white-space:nowrap; }
+        .menu-item-card .btn-add { width:30px; height:30px; border-radius:50%; background:var(--gold); color:#fff; border:none; cursor:pointer; font-size:1.1rem; font-weight:700; transition:all var(--transition); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .menu-item-card .btn-add:hover { background:var(--gold2); transform:scale(1.1); }
+        .order-item-row { display:flex; align-items:center; justify-content:space-between; padding:6px 8px; border-bottom:1px dotted var(--border); gap:6px; font-size:0.82rem; }
+        .order-item-row .qty-ctrl { display:flex; align-items:center; gap:4px; }
+        .order-item-row .qty-ctrl button { width:22px; height:22px; border-radius:50%; border:1px solid var(--border); background:var(--surface2); cursor:pointer; font-weight:700; font-size:0.75rem; transition:all var(--transition); color:var(--text); }
+        .order-item-row .qty-ctrl button:hover { background:var(--gold); color:#fff; border-color:var(--gold); }
+        .order-item-row .item-total { font-weight:700; color:var(--gold); white-space:nowrap; }
+        .bill-summary-row { display:flex; justify-content:space-between; padding:4px 0; font-size:0.85rem; }
+        .bill-summary-row.total { font-size:1.2rem; font-weight:800; color:var(--gold); border-top:2px solid var(--gold); padding-top:8px; margin-top:4px; }
+        .kot-ticket { display:inline-flex; align-items:center; gap:10px; background:#fffef5; border:2px solid #f9a825; border-radius:var(--radius-sm); padding:10px 16px; font-size:0.8rem; font-weight:600; margin:4px; white-space:nowrap; transition:all var(--transition); animation: slideInRight 0.3s ease; }
+        .dark-mode .kot-ticket { background:#2a2010; }
+        .kot-ticket .kot-status { padding:3px 10px; border-radius:12px; font-size:0.7rem; font-weight:700; }
+        .kot-status.preparing { background:#fff3cd; color:#856404; }
+        .kot-status.ready { background:#d1ecf1; color:#0c5460; }
+        .kot-status.served { background:#d4edda; color:#155724; }
+        .dark-mode .kot-status.preparing { background:#3d2e0a; color:#e8c84a; }
+        .dark-mode .kot-status.ready { background:#0a2a33; color:#7dc8e0; }
+        .dark-mode .kot-status.served { background:#1a3c22; color:#7ddf90; }
+        .payment-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:3000; display:flex; align-items:center; justify-content:center; animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+        .payment-modal { background:var(--surface); border-radius:var(--radius); padding:2rem; max-width:480px; width:93%; box-shadow:var(--shadow-lg); border:2px solid var(--gold); max-height:85vh; overflow-y:auto; }
+        .badge { display:inline-block; padding:4px 12px; border-radius:14px; font-size:0.7rem; font-weight:600; }
+        .badge-success { background:#d4edda; color:#155724; } .badge-warning { background:#fff3cd; color:#856404; } .badge-danger { background:#f8d7da; color:#721c24; } .badge-info { background:#d1ecf1; color:#0c5460; }
+        .dark-mode .badge-success { background:#1a3c22; color:#7ddf90; } .dark-mode .badge-warning { background:#3d2e0a; color:#e8c84a; } .dark-mode .badge-danger { background:#3d1a1a; color:#e88; } .dark-mode .badge-info { background:#0a2a33; color:#7dc8e0; }
+        .toast-container { position:fixed; top:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:8px; }
+        .toast { padding:14px 20px; border-radius:var(--radius-sm); color:#fff; font-weight:600; animation: slideInRight 0.3s ease; box-shadow:var(--shadow-lg); font-size:0.9rem; }
+        .toast.success { background:var(--success); } .toast.error { background:var(--danger); } .toast.info { background:var(--info); }
+        @keyframes slideInRight { from{transform:translateX(120%); opacity:0;} to{transform:translateX(0); opacity:1;} }
+        .site-footer { text-align:center; padding:1.5rem; border-top:2px solid var(--border); color:var(--text2); font-size:0.85rem; background:var(--surface); margin-top:1rem; }
+        .confetti { position:fixed; top:-20px; z-index:9998; pointer-events:none; animation: confettiFall 2s ease-out forwards; font-size:2rem; }
+        @keyframes confettiFall { 0%{transform:translateY(0) rotate(0deg); opacity:1;} 100%{transform:translateY(100vh) rotate(720deg); opacity:0;} }
+        .qr-display { width:140px; height:140px; margin:0.5rem auto; background:#fff; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:5rem; border:3px solid var(--gold); }
+        table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+        th,td { padding:8px 10px; text-align:left; border-bottom:1px solid var(--border); }
+        th { background:var(--surface2); font-weight:700; color:var(--gold); }
+        .admin-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; }
+        .stat-card { text-align:center; padding:1.5rem; }
+        .stat-value { font-size:2.5rem; font-weight:700; color:var(--gold); font-family:var(--font-heading); }
+        .chart-bar-container { display:flex; align-items:flex-end; gap:10px; height:180px; padding:1rem; }
+        .chart-bar { flex:1; background:linear-gradient(to top,var(--gold),var(--gold2)); border-radius:8px 8px 0 0; min-width:28px; transition:all 0.5s ease; }
+        .chart-bar-label { text-align:center; font-size:0.7rem; color:var(--text2); }
+        .floor-section { margin-bottom:1.5rem; padding:1rem; background:var(--surface2); border-radius:var(--radius-sm); border:1px solid var(--border); }
+        .floor-section h4 { color:var(--gold); font-family:var(--font-heading); margin-bottom:0.5rem; }
+        @media (max-width:768px) {
+            .hamburger{display:flex;} .nav-links{display:none; position:absolute; top:64px; left:0; right:0; background:var(--nav-bg); flex-direction:column; padding:1rem; gap:4px;} .nav-links.open{display:flex;}
+            .hero-content h1{font-size:2rem;} .hero-content .tagline{font-size:1rem;} .main-container{padding:0.8rem;} .top-nav{padding:0 1rem;}
+            .pos-main{grid-template-columns:1fr;} .pos-left,.pos-center,.pos-right{max-height:none;} .table-grid{grid-template-columns:1fr 1fr 1fr;}
+            .room-grid-theatre{grid-template-columns: repeat(auto-fill, minmax(65px,1fr)); gap:6px;} .room-cell-theatre{min-height:60px; font-size:0.65rem;}
+        }
+        @media (max-width:480px) {
+            .table-grid{grid-template-columns:1fr 1fr;} .table-cell{min-height:55px; font-size:0.7rem;} .pos-mode-btn{padding:8px 14px; font-size:0.75rem;}
+            .room-grid-theatre{grid-template-columns: repeat(auto-fill, minmax(55px,1fr)); gap:4px;} .room-cell-theatre{min-height:50px; font-size:0.6rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <nav class="top-nav" id="topNav">
+        <div class="nav-brand" onclick="navigateTo('home')">
+            <div class="nav-logo">🍽️</div>
+            <div class="nav-title">SILKY <span>SPICIES</span></div>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+        <ul class="nav-links" id="navLinks">
+            <li><a onclick="navigateTo('home')" class="active" data-nav="home">🏠 Home</a></li>
+            <li><a onclick="navigateTo('booking')" data-nav="booking" class="locked">🏨 Hotel Booking</a></li>
+            <li><a onclick="navigateTo('restaurant')" data-nav="restaurant" class="locked">🍽️ Restaurant POS</a></li>
+            <li><a onclick="navigateTo('admin')" data-nav="admin" class="locked">🧾 Admin Panel</a></li>
+            <li><a onclick="navigateTo('dashboard')" data-nav="dashboard" class="locked">📊 Dashboard</a></li>
+            <li><a onclick="navigateTo('contact')" data-nav="contact">📞 Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-logout" id="btnLogout" onclick="handleLogout()" title="Logout">🚪 Logout</button>
+            <button class="btn-icon" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode" aria-label="Theme toggle">🌓</button>
+        </div>
+    </nav>
+
+    <div class="main-container" id="mainContainer">
+        <section class="page-section active" id="page-home">
+            <div class="hero-banner">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-badge">⭐ PREMIUM EXPERIENCE</div>
+                    <h1>SILKY SPICIES</h1>
+                    <p class="tagline">Luxury Comfort in Budbud</p>
+                    <p style="color:#ddd;margin-bottom:1.5rem;">Hotel & Fine Dining Restaurant — Where Elegance Meets Flavor</p>
+                    <button class="btn btn-gold" onclick="navigateTo('booking')" style="font-size:1.1rem;padding:14px 32px;">🛏️ Book Now — Starting ₹2,499</button>
+                </div>
+            </div>
+            <div class="highlights-grid">
+                <div class="glass-card highlight-card"><div class="highlight-icon">🛏️</div><h3>Premium Rooms</h3><p>Deluxe to Royal Suites</p></div>
+                <div class="glass-card highlight-card"><div class="highlight-icon">🍽️</div><h3>Fine Dining</h3><p>Bengali • Chinese • North Indian</p></div>
+                <div class="glass-card highlight-card"><div class="highlight-icon">🕐</div><h3>24/7 Service</h3><p>Round-the-clock care</p></div>
+                <div class="glass-card highlight-card"><div class="highlight-icon">📱</div><h3>Smart Booking</h3><p>Instant confirmation</p></div>
+            </div>
+            <h2 style="font-family:var(--font-heading);margin-bottom:1rem;">📸 Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-img" style="background:#3a2a1a;"><span style="font-size:4rem;">🛏️</span><div class="img-label">Deluxe Room</div></div>
+                <div class="gallery-img" style="background:#2a1a0a;"><span style="font-size:4rem;">🍽️</span><div class="img-label">Restaurant Hall</div></div>
+                <div class="gallery-img" style="background:#1a2a1a;"><span style="font-size:4rem;">🏛️</span><div class="img-label">Grand Lobby</div></div>
+                <div class="gallery-img" style="background:#2a1a2a;"><span style="font-size:4rem;">🌿</span><div class="img-label">Garden View</div></div>
+            </div>
+            <h2 style="font-family:var(--font-heading);margin-bottom:1rem;">⭐ Guest Reviews</h2>
+            <div class="reviews-scroll">
+                <div class="glass-card review-card"><div class="review-stars">★★★★★</div><p><strong>Ananya S.</strong></p><p>"Exceptional stay! Food was divine."</p></div>
+                <div class="glass-card review-card"><div class="review-stars">★★★★★</div><p><strong>Rajdeep M.</strong></p><p>"Best hotel in Budbud area."</p></div>
+                <div class="glass-card review-card"><div class="review-stars">★★★★☆</div><p><strong>Priya K.</strong></p><p>"Loved the Royal Suite!"</p></div>
+                <div class="glass-card review-card"><div class="review-stars">★★★★★</div><p><strong>CEO Aritra Khan</strong></p><p>"Every guest is family."</p></div>
+            </div>
+            <div class="glass-card" style="margin-top:2rem;text-align:center;">
+                <h3>📍 Our Location</h3>
+                <p style="color:var(--gold);font-weight:700;">Budbud, West Bengal, India</p>
+                <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:2rem;margin-top:1rem;font-size:3rem;">🗺️<br><small style="font-size:0.8rem;color:var(--text2);">Map Embed — Budbud, WB</small></div>
+            </div>
+        </section>
+
+        <section class="page-section" id="page-booking">
+            <h2 style="font-family:var(--font-heading);text-align:center;margin-bottom:1rem;">🏨 Hotel Booking Wizard</h2>
+            <div class="stage-indicator" id="stageIndicator">
+                <div class="stage-dot active" data-stage="1">1</div><div class="stage-dot" data-stage="2">2</div><div class="stage-dot" data-stage="3">3</div><div class="stage-dot" data-stage="4">4</div><div class="stage-dot" data-stage="5">5</div><div class="stage-dot" data-stage="6">6</div>
+            </div>
+            <div id="bookingStageContent" class="glass-card" style="min-height:400px;"></div>
+        </section>
+
+        <section class="page-section" id="page-restaurant">
+            <div class="pos-container" id="posContainer">
+                <div class="pos-topbar" id="posTopbar">
+                    <div class="pos-mode-selector" id="posModeSelector">
+                        <button class="pos-mode-btn active" data-mode="dinein" onclick="setPOSMode('dinein')">🪑 Dine-In</button>
+                        <button class="pos-mode-btn" data-mode="takeaway" onclick="setPOSMode('takeaway')">🛍️ Takeaway</button>
+                    </div>
+                    <div class="pos-info-badge" id="posInfoBadge"><span>🟢</span> <span id="posInfoText">Select a table to start</span></div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span style="font-weight:700;color:var(--gold);" id="posClock">--:--</span>
+                        <button class="btn btn-sm btn-outline" onclick="showPOSHelp()">❓</button>
+                    </div>
+                </div>
+                <div class="pos-main">
+                    <div class="pos-left" id="posLeftPanel">
+                        <h4>🪑 Table Map</h4>
+                        <div class="table-grid" id="tableGrid"></div>
+                        <div class="takeaway-card" id="takeawayCard" onclick="initTakeawayOrder()">
+                            <div class="ta-icon">🛍️</div><strong>New Takeaway Order</strong>
+                            <p style="font-size:0.7rem;color:var(--text2);">Click to start</p>
+                        </div>
+                        <div id="takeawayForm" style="display:none;">
+                            <label>Customer Name</label><input type="text" id="taCustName" placeholder="Customer name">
+                            <label>Phone</label><input type="text" id="taCustPhone" placeholder="Phone number">
+                            <button class="btn btn-gold btn-sm" style="width:100%;margin-top:6px;" onclick="confirmTakeaway()">✅ Start Takeaway Order</button>
+                            <button class="btn btn-outline btn-sm" style="width:100%;margin-top:4px;" onclick="cancelTakeaway()">Cancel</button>
+                        </div>
+                        <div style="margin-top:0.5rem;font-size:0.7rem;color:var(--text2);text-align:center;">
+                            <span class="badge badge-success">Free</span> <span class="badge badge-warning">Ordering</span> <span class="badge badge-danger">Eating</span> <span class="badge" style="background:#e0e0e0;">Paid</span>
+                        </div>
+                    </div>
+                    <div class="pos-center" id="posCenterPanel">
+                        <h4 style="font-family:var(--font-heading);color:var(--gold);margin-bottom:0.5rem;">📋 Menu</h4>
+                        <div class="menu-cat-tabs" id="menuCatTabs"></div>
+                        <div class="menu-search"><input type="text" id="menuSearchInput" placeholder="🔍 Search menu items..." oninput="filterMenuItems()"></div>
+                        <div id="menuItemsContainer" style="overflow-y:auto;max-height:calc(65vh - 180px);"></div>
+                    </div>
+                    <div class="pos-right" id="posRightPanel">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                            <h4 style="font-family:var(--font-heading);color:var(--gold);">🧾 Order</h4>
+                            <span id="orderTableBadge" style="font-size:0.8rem;"></span>
+                        </div>
+                        <div id="orderItemsList" style="max-height:280px;overflow-y:auto;min-height:40px;">
+                            <p style="color:var(--text2);text-align:center;padding:1rem;">No items in order</p>
+                        </div>
+                        <hr style="border-color:var(--border);margin:0.5rem 0;">
+                        <div class="bill-summary-row"><span>Subtotal</span><span id="orderSubtotal">₹0</span></div>
+                        <div class="bill-summary-row"><span>GST (5%)</span><span id="orderGst">₹0</span></div>
+                        <div class="bill-summary-row"><span>Discount</span><span id="orderDiscount" style="color:var(--success);">-₹0</span></div>
+                        <div class="bill-summary-row total"><span>TOTAL</span><span id="orderTotal">₹0</span></div>
+                        <div style="display:flex;gap:6px;margin-top:0.5rem;flex-wrap:wrap;">
+                            <button class="btn btn-accent btn-sm" onclick="sendToKOT()" id="btnSendKOT" disabled>📤 Send to KOT</button>
+                            <button class="btn btn-gold btn-sm" onclick="openPaymentModal()" id="btnPayBill" disabled>💳 Pay Bill</button>
+                            <button class="btn btn-outline btn-sm" onclick="applyOrderDiscount()">🏷️ Discount</button>
+                            <button class="btn btn-sm btn-outline" onclick="splitBillPrompt()" style="font-size:0.7rem;">✂️ Split</button>
+                            <button class="btn btn-sm btn-outline" onclick="clearCurrentOrder()" style="font-size:0.7rem;color:var(--danger);">🗑️ Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" id="kotSection">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                        <h3 style="font-family:var(--font-heading);color:var(--gold);">👨‍🍳 Kitchen Order Tickets (KOT)</h3>
+                        <button class="btn btn-sm btn-outline" onclick="clearAllKOTs()">Clear Served</button>
+                    </div>
+                    <div id="kotDisplayArea" style="display:flex;flex-wrap:wrap;gap:8px;min-height:50px;align-items:center;">
+                        <p style="color:var(--text2);">No active KOTs</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="page-admin">
+            <h2 style="font-family:var(--font-heading);text-align:center;margin-bottom:1rem;">🧑‍💼 Admin Panel — SILKY SPICIES</h2>
+            <div class="admin-grid" style="margin-bottom:2rem;">
+                <div class="glass-card stat-card"><div class="stat-value" id="adminTotalBookings">0</div><p>Total Bookings</p></div>
+                <div class="glass-card stat-card"><div class="stat-value" id="adminTotalRevenue">₹0</div><p>Total Revenue</p></div>
+                <div class="glass-card stat-card"><div class="stat-value" id="adminRestaurantSales">₹0</div><p>Restaurant Sales</p></div>
+                <div class="glass-card stat-card"><div class="stat-value" id="adminOccupancy">0%</div><p>Occupancy Rate</p></div>
+            </div>
+            <div class="glass-card" style="margin-bottom:1.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                    <h3>🏨 Room Inventory & Management</h3>
+                    <button class="btn btn-gold btn-sm" onclick="showAddRoomForm()">➕ Add New Room</button>
+                </div>
+                <div id="adminRoomGrid" style="margin-top:1rem;"></div>
+                <div id="adminAddRoomForm" style="display:none;margin-top:1rem;padding:1rem;background:var(--surface2);border-radius:var(--radius-sm);"></div>
+            </div>
+            <div class="glass-card" style="margin-bottom:1.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                    <h3>🍽️ Food Menu Management</h3>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                        <button class="btn btn-gold btn-sm" onclick="showAddFoodForm()">➕ Add Food Item</button>
+                        <button class="btn btn-outline btn-sm" onclick="showAddCategoryForm()">📁 New Category</button>
+                    </div>
+                </div>
+                <div id="adminFoodTable" style="margin-top:1rem;overflow-x:auto;"></div>
+                <div id="adminAddFoodForm" style="display:none;margin-top:1rem;padding:1rem;background:var(--surface2);border-radius:var(--radius-sm);"></div>
+                <div id="adminAddCategoryForm" style="display:none;margin-top:1rem;padding:1rem;background:var(--surface2);border-radius:var(--radius-sm);"></div>
+            </div>
+            <div class="glass-card" style="margin-bottom:1.5rem;">
+                <h3>🏨 Recent Bookings</h3>
+                <div style="overflow-x:auto;"><table id="adminBookingsTable"><thead><tr><th>Booking ID</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+            </div>
+            <div class="glass-card" style="margin-bottom:1.5rem;">
+                <h3>👥 Customer Database</h3>
+                <div style="overflow-x:auto;"><table id="customerDbTable"><thead><tr><th>Name</th><th>Mobile</th><th>Email</th><th>Aadhaar</th><th>Bookings</th></tr></thead><tbody></tbody></table></div>
+            </div>
+            <div class="glass-card" style="margin-top:1.5rem;">
+                <h3>🔐 Security Settings</h3>
+                <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;">
+                    <div><label>Change Access Password</label><input type="password" id="newPasswordInput" placeholder="New password"></div>
+                    <button class="btn btn-accent btn-sm" onclick="changePassword()">Update Password</button>
+                </div>
+                <p style="font-size:0.7rem;color:var(--text2);margin-top:4px;">Default: silkyspicies2026</p>
+            </div>
+            <div class="glass-card" style="margin-top:1.5rem; text-align:center;">
+                <button class="btn btn-danger" onclick="resetAllData()">⚠️ Reset All Data (Clear Local Storage)</button>
+                <p style="font-size:0.7rem;color:var(--text2);margin-top:4px;">Use this if the app behaves unexpectedly. It will wipe all saved data.</p>
+            </div>
+        </section>
+
+        <section class="page-section" id="page-dashboard">
+            <h2 style="font-family:var(--font-heading);text-align:center;margin-bottom:1rem;">📊 Analytics Dashboard</h2>
+            <div class="glass-card" style="margin-bottom:1.5rem;"><h3>📈 Monthly Revenue Trend</h3><div class="chart-bar-container" id="revenueChart"></div><div style="display:flex;justify-content:space-around;flex-wrap:wrap;" id="revenueChartLabels"></div></div>
+            <div class="admin-grid"><div class="glass-card"><h3>🍽️ Top Ordered Food</h3><div id="topFoodList"></div></div><div class="glass-card"><h3>📊 Booking Trends</h3><div id="bookingTrendsInfo"></div></div></div>
+        </section>
+
+        <section class="page-section" id="page-contact">
+            <div class="glass-card" style="text-align:center;max-width:600px;margin:0 auto;">
+                <h2 style="font-family:var(--font-heading);">📞 Contact & Support</h2>
+                <p style="font-size:1.2rem;margin:1rem 0;"><strong>SILKY SPICIES HOTEL & RESTAURANT</strong></p>
+                <p>📍 Budbud, West Bengal, India</p><p>📧 info@silkyspicies.com</p><p>📱 +91 98765 43210</p>
+                <p>👨‍💼 CEO: <strong>Aritra Khan</strong></p><p style="color:var(--gold);">24/7 Customer Support Available</p>
+                <button class="btn btn-gold" style="margin-top:1rem;" onclick="showToast('Support request sent! We will contact you shortly.','info')">💬 Live Chat</button>
+            </div>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <p>© 2026 <strong>SILKY SPICIES</strong> | Budbud, West Bengal | CEO: Aritra Khan | All Rights Reserved</p>
+        <p style="color:var(--gold);">Luxury Comfort • Fine Dining • Smart Hospitality</p>
+    </footer>
+
+    <div id="modalContainer"></div>
+
+    <script>
+        // ============ DATA VERSION (INCREMENT TO FORCE RESET) ============
+        const DATA_VERSION = 1;
+
+        // ============ GLOBAL STATE ============
+        const APP = {
+            darkMode: false,
+            currentPage: 'home',
+            auth: { isLoggedIn: false, password: 'silkyspicies2026' },
+            booking: {
+                stage: 1, checkIn: '', checkOut: '', rooms: 1, totalMembers: 1,
+                members: [], selectedRoomType: '', selectedRoomNumber: '',
+                selectedFloor: '', selectedRoomId: '', bookingId: ''
+            },
+            restaurant: {
+                mode: 'dinein', selectedTable: null, takeawayCustomer: null,
+                tableOrders: {}, currentOrderItems: [], currentDiscount: 0,
+                kotOrders: [], orderCounter: 100,
+                menu: [
+                    { id: 1, name: 'Kosha Mangsho', category: 'Bengali', price: 320, emoji: '🍖' },
+                    { id: 2, name: 'Luchi-Aloo Dum', category: 'Bengali', price: 180, emoji: '🥔' },
+                    { id: 3, name: 'Fish Fry (Bhetki)', category: 'Bengali', price: 250, emoji: '🐟' },
+                    { id: 4, name: 'Shorshe Ilish', category: 'Bengali', price: 450, emoji: '🐠' },
+                    { id: 5, name: 'Hakka Noodles', category: 'Chinese', price: 200, emoji: '🍜' },
+                    { id: 6, name: 'Chilli Chicken', category: 'Chinese', price: 280, emoji: '🌶️' },
+                    { id: 7, name: 'Fried Rice', category: 'Chinese', price: 190, emoji: '🍚' },
+                    { id: 8, name: 'Butter Chicken', category: 'North Indian', price: 350, emoji: '🍗' },
+                    { id: 9, name: 'Naan (Butter)', category: 'North Indian', price: 60, emoji: '🫓' },
+                    { id: 10, name: 'Dal Makhani', category: 'North Indian', price: 220, emoji: '🫘' },
+                    { id: 11, name: 'Pizza Margherita', category: 'Fast Food', price: 250, emoji: '🍕' },
+                    { id: 12, name: 'Burger & Fries', category: 'Fast Food', price: 200, emoji: '🍔' },
+                    { id: 13, name: 'Gulab Jamun', category: 'Desserts', price: 120, emoji: '🍯' },
+                    { id: 14, name: 'Rasmalai', category: 'Desserts', price: 140, emoji: '🥛' },
+                    { id: 15, name: 'Mishti Doi', category: 'Desserts', price: 90, emoji: '🍶' },
+                    { id: 16, name: 'Chicken Biryani', category: 'North Indian', price: 320, emoji: '🍛' }
+                ],
+                dailySales: 0
+            },
+            admin: {
+                allBookings: [],
+                allCustomers: [],
+                restaurantOrders: [],
+                roomInventory: [],
+                nextFoodId: 17,
+                nextRoomId: 30
+            }
+        };
+
+        // ============ DEFAULT ROOM INVENTORY ============
+        function createDefaultRooms() {
+            return [
+                { id: 'R001', number: '101', floor: 1, type: 'Deluxe', price: 2499, status: 'available', amenities: 'AC, TV, WiFi' },
+                { id: 'R002', number: '102', floor: 1, type: 'Deluxe', price: 2499, status: 'available', amenities: 'AC, TV, WiFi' },
+                { id: 'R003', number: '103', floor: 1, type: 'Deluxe', price: 2499, status: 'available', amenities: 'AC, TV, WiFi' },
+                { id: 'R004', number: '104', floor: 1, type: 'Deluxe', price: 2499, status: 'booked', amenities: 'AC, TV, WiFi' },
+                { id: 'R005', number: '105', floor: 1, type: 'Deluxe', price: 2499, status: 'available', amenities: 'AC, TV, WiFi' },
+                { id: 'R006', number: '106', floor: 1, type: 'Deluxe', price: 2499, status: 'maintenance', amenities: 'AC, TV, WiFi' },
+                { id: 'R007', number: '201', floor: 2, type: 'Super Deluxe', price: 3999, status: 'available', amenities: 'AC, TV, WiFi, Mini Bar' },
+                { id: 'R008', number: '202', floor: 2, type: 'Super Deluxe', price: 3999, status: 'available', amenities: 'AC, TV, WiFi, Mini Bar' },
+                { id: 'R009', number: '203', floor: 2, type: 'Super Deluxe', price: 3999, status: 'booked', amenities: 'AC, TV, WiFi, Mini Bar' },
+                { id: 'R010', number: '204', floor: 2, type: 'Super Deluxe', price: 3999, status: 'available', amenities: 'AC, TV, WiFi, Mini Bar' },
+                { id: 'R011', number: '205', floor: 2, type: 'Super Deluxe', price: 3999, status: 'available', amenities: 'AC, TV, WiFi, Mini Bar' },
+                { id: 'R012', number: '206', floor: 2, type: 'Super Deluxe', price: 3999, status: 'available', amenities: 'AC, TV, WiFi, Mini Bar' },
+                { id: 'R013', number: '301', floor: 3, type: 'Premium Suite', price: 6499, status: 'available', amenities: 'AC, TV, WiFi, Lounge, Bathtub' },
+                { id: 'R014', number: '302', floor: 3, type: 'Premium Suite', price: 6499, status: 'booked', amenities: 'AC, TV, WiFi, Lounge, Bathtub' },
+                { id: 'R015', number: '303', floor: 3, type: 'Premium Suite', price: 6499, status: 'available', amenities: 'AC, TV, WiFi, Lounge, Bathtub' },
+                { id: 'R016', number: '304', floor: 3, type: 'Premium Suite', price: 6499, status: 'available', amenities: 'AC, TV, WiFi, Lounge, Bathtub' },
+                { id: 'R017', number: '401', floor: 4, type: 'Royal Suite', price: 9999, status: 'available', amenities: 'AC, TV, WiFi, Lounge, Jacuzzi, Butler' },
+                { id: 'R018', number: '402', floor: 4, type: 'Royal Suite', price: 9999, status: 'available', amenities: 'AC, TV, WiFi, Lounge, Jacuzzi, Butler' },
+                { id: 'R019', number: '403', floor: 4, type: 'Royal Suite', price: 9999, status: 'booked', amenities: 'AC, TV, WiFi, Lounge, Jacuzzi, Butler' }
+            ];
+        }
+
+        // ============ LOAD / SAVE STATE WITH VERSION CHECK ============
+        function loadState() {
+            try {
+                const raw = localStorage.getItem('silkyspicies_data');
+                if (!raw) throw new Error('No saved data');
+                const data = JSON.parse(raw);
+                // version check: if version missing or old, reset to defaults
+                if (data.dataVersion !== DATA_VERSION) {
+                    console.warn('Data version mismatch, resetting to defaults.');
+                    localStorage.removeItem('silkyspicies_data');
+                    applyDefaults();
+                    return;
+                }
+                if (data.admin) {
+                    APP.admin.allBookings = data.admin.allBookings || [];
+                    APP.admin.allCustomers = data.admin.allCustomers || [];
+                    APP.admin.restaurantOrders = data.admin.restaurantOrders || [];
+                    APP.admin.roomInventory = (data.admin.roomInventory && data.admin.roomInventory.length > 0) ? data.admin.roomInventory : createDefaultRooms();
+                    APP.admin.nextFoodId = data.admin.nextFoodId || 17;
+                    APP.admin.nextRoomId = data.admin.nextRoomId || 30;
+                }
+                if (data.restaurantOrders) APP.admin.restaurantOrders = data.restaurantOrders;
+                if (data.tableOrders) APP.restaurant.tableOrders = Object.assign({}, data.tableOrders);
+                if (data.kotOrders) APP.restaurant.kotOrders = data.kotOrders;
+                if (data.dailySales) APP.restaurant.dailySales = data.dailySales;
+                if (data.menu && data.menu.length > 0) APP.restaurant.menu = data.menu;
+                if (data.darkMode !== undefined) APP.darkMode = data.darkMode;
+                if (data.authPassword) APP.auth.password = data.authPassword;
+                // ensure room inventory exists
+                if (APP.admin.roomInventory.length === 0) APP.admin.roomInventory = createDefaultRooms();
+            } catch (e) {
+                console.warn('State load error, resetting:', e);
+                localStorage.removeItem('silkyspicies_data');
+                applyDefaults();
+            }
+            if (APP.darkMode) document.body.classList.add('dark-mode');
+            const sessionAuth = sessionStorage.getItem('silkyspicies_auth');
+            APP.auth.isLoggedIn = (sessionAuth === 'true');
+        }
+
+        function applyDefaults() {
+            APP.admin.roomInventory = createDefaultRooms();
+            APP.restaurant.tableOrders = {};
+            for (let i = 1; i <= 12; i++) {
+                APP.restaurant.tableOrders[i] = { items: [], kotId: null, status: 'free', orderId: null, discount: 0, startTime: null };
+            }
+            // simulate some occupied tables
+            [3,7,10].forEach(t => {
+                APP.restaurant.tableOrders[t].status = 'eating';
+                APP.restaurant.tableOrders[t].startTime = new Date(Date.now() - Math.floor(Math.random()*3600000)).toISOString();
+                APP.restaurant.tableOrders[t].items = [APP.restaurant.menu[0], APP.restaurant.menu[5]];
+            });
+            APP.restaurant.kotOrders = [];
+            APP.restaurant.dailySales = 0;
+            APP.admin.allBookings = [];
+            APP.admin.allCustomers = [];
+            APP.admin.restaurantOrders = [];
+            APP.admin.nextFoodId = 17;
+            APP.admin.nextRoomId = 30;
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('silkyspicies_data', JSON.stringify({
+                    dataVersion: DATA_VERSION,
+                    admin: APP.admin,
+                    restaurantOrders: APP.admin.restaurantOrders,
+                    tableOrders: APP.restaurant.tableOrders,
+                    kotOrders: APP.restaurant.kotOrders,
+                    dailySales: APP.restaurant.dailySales,
+                    menu: APP.restaurant.menu,
+                    darkMode: APP.darkMode,
+                    authPassword: APP.auth.password,
+                }));
+            } catch (e) { console.warn('Save error:', e); }
+        }
+
+        function resetAllData() {
+            if (confirm('⚠️ This will delete all bookings, orders, and custom changes. Are you sure?')) {
+                localStorage.removeItem('silkyspicies_data');
+                sessionStorage.removeItem('silkyspicies_auth');
+                location.reload();
+            }
+        }
+
+        // ============ INITIALIZATION ============
+        loadState();  // this may reset if version mismatch
+        // If room inventory is still empty (just in case), fill it
+        if (APP.admin.roomInventory.length === 0) APP.admin.roomInventory = createDefaultRooms();
+        // Table orders initialization for any missing tables
+        for (let i = 1; i <= 12; i++) {
+            if (!APP.restaurant.tableOrders[i]) {
+                APP.restaurant.tableOrders[i] = { items: [], kotId: null, status: 'free', orderId: null, discount: 0, startTime: null };
+            }
+        }
+
+        // ============ AUTH ============
+        const PROTECTED_PAGES = ['booking','restaurant','admin','dashboard'];
+        function updateLogoutButton() {
+            const btn = document.getElementById('btnLogout');
+            if (btn) btn.classList.toggle('visible', APP.auth.isLoggedIn);
+        }
+        function updateNavLockIcons() {
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                const navPage = a.dataset.nav;
+                if (PROTECTED_PAGES.includes(navPage)) {
+                    a.classList.toggle('locked', !APP.auth.isLoggedIn);
+                }
+            });
+        }
+        function showLoginModal(targetPage) {
+            const modalContainer = document.getElementById('modalContainer');
+            modalContainer.innerHTML = `
+            <div class="payment-modal-overlay" id="loginModalOverlay">
+              <div class="payment-modal">
+                <h3 style="font-family:var(--font-heading);color:var(--gold);text-align:center;">🔐 Access Required</h3>
+                <p style="text-align:center;margin:0.5rem 0;">Enter password to access this section.</p>
+                <label>Password</label>
+                <input type="password" id="loginPasswordInput" placeholder="Enter password" style="font-size:1.1rem;text-align:center;">
+                <div id="loginError" style="color:var(--danger);text-align:center;margin-top:4px;display:none;">❌ Incorrect password!</div>
+                <div style="display:flex;gap:8px;margin-top:1rem;">
+                  <button class="btn btn-gold" style="flex:1;" onclick="verifyLogin('${targetPage}')">✅ Unlock</button>
+                  <button class="btn btn-outline" style="flex:1;" onclick="closeLoginModal()">Cancel</button>
+                </div>
+                <p style="font-size:0.65rem;color:var(--text2);text-align:center;margin-top:0.5rem;">Default: silkyspicies2026</p>
+              </div>
+            </div>`;
+            document.getElementById('loginModalOverlay').addEventListener('click', function(e) {
+                if (e.target === this) closeLoginModal();
+            });
+            setTimeout(() => { const inp = document.getElementById('loginPasswordInput'); if (inp) inp.focus(); }, 200);
+        }
+        function verifyLogin(targetPage) {
+            const input = document.getElementById('loginPasswordInput');
+            const errorEl = document.getElementById('loginError');
+            if (input && input.value.trim() === APP.auth.password) {
+                APP.auth.isLoggedIn = true;
+                sessionStorage.setItem('silkyspicies_auth', 'true');
+                updateLogoutButton();
+                updateNavLockIcons();
+                closeLoginModal();
+                navigateTo(targetPage);
+                showToast('✅ Access granted!', 'success');
+            } else {
+                if (errorEl) errorEl.style.display = 'block';
+                if (input) { input.value = ''; input.focus(); }
+                showToast('❌ Incorrect password!', 'error');
+            }
+        }
+        function closeLoginModal() { document.getElementById('modalContainer').innerHTML = ''; }
+        function handleLogout() {
+            APP.auth.isLoggedIn = false;
+            sessionStorage.removeItem('silkyspicies_auth');
+            updateLogoutButton();
+            updateNavLockIcons();
+            if (PROTECTED_PAGES.includes(APP.currentPage)) navigateTo('home');
+            showToast('👋 Logged out.', 'info');
+        }
+        function changePassword() {
+            const newPass = document.getElementById('newPasswordInput').value.trim();
+            if (!newPass || newPass.length < 6) { showToast('Password must be at least 6 characters!', 'error'); return; }
+            APP.auth.password = newPass;
+            saveState();
+            document.getElementById('newPasswordInput').value = '';
+            showToast('🔐 Password updated!', 'success');
+        }
+
+        // ============ NAVIGATION ============
+        function navigateTo(page) {
+            if (PROTECTED_PAGES.includes(page) && !APP.auth.isLoggedIn) {
+                showLoginModal(page);
+                return;
+            }
+            APP.currentPage = page;
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            const navLink = document.querySelector(`[data-nav="${page}"]`);
+            if (navLink) navLink.classList.add('active');
+            document.getElementById('navLinks').classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateNavLockIcons();
+            if (page === 'booking') renderBookingStage();
+            if (page === 'restaurant') renderFullPOS();
+            if (page === 'admin') renderAdminPanel();
+            if (page === 'dashboard') renderDashboard();
+        }
+        document.getElementById('hamburgerBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+        function toggleDarkMode() {
+            APP.darkMode = !APP.darkMode;
+            document.body.classList.toggle('dark-mode', APP.darkMode);
+            saveState();
+            showToast(APP.darkMode ? '🌙 Dark Mode' : '☀️ Light Mode', 'info');
+        }
+        function showToast(msg, type='info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; }, 2500);
+            setTimeout(() => toast.remove(), 2900);
+        }
+        function spawnConfetti() {
+            const emojis = ['🎉','✨','🎊','🌟','💫','🏆','🎯','💎','🍽️','👨‍🍳'];
+            for (let i=0; i<25; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('span');
+                    el.className = 'confetti';
+                    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+                    el.style.left = Math.random()*90+'%';
+                    el.style.animationDuration = (1.5+Math.random()*2)+'s';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 3500);
+                }, i*40);
+            }
+        }
+        function updatePOSClock() {
+            const el = document.getElementById('posClock');
+            if (el) el.textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+        }
+        setInterval(updatePOSClock, 1000);
+
+        // ============ ROOM HELPERS ============
+        function getAvailableRoomsByType(type) {
+            return APP.admin.roomInventory.filter(r => r.type === type && r.status === 'available');
+        }
+        function getRoomById(roomId) {
+            return APP.admin.roomInventory.find(r => r.id === roomId);
+        }
+        function markRoomBooked(roomId, bookingId) {
+            const room = APP.admin.roomInventory.find(r => r.id === roomId);
+            if (room) { room.status = 'booked'; room.bookingRef = bookingId; }
+            saveState();
+        }
+        function markRoomAvailable(roomId) {
+            const room = APP.admin.roomInventory.find(r => r.id === roomId);
+            if (room) { room.status = 'available'; room.bookingRef = null; }
+            saveState();
+        }
+        function getRoomTypeIcon(type) {
+            const icons = {'Deluxe':'🛏️', 'Super Deluxe':'🛋️', 'Premium Suite':'💎', 'Royal Suite':'👑'};
+            return icons[type] || '🏨';
+        }
+
+        // ============ FULL POS RENDER ============
+        function renderFullPOS() {
+            updatePOSClock();
+            renderTableGrid();
+            renderMenuCategories();
+            filterMenuItems();
+            renderCurrentOrder();
+            renderKOTSection();
+            updatePOSInfoBadge();
+            updateTakeawayUI();
+        }
+        function renderTableGrid() {
+            const grid = document.getElementById('tableGrid');
+            let html = '';
+            for (let i=1; i<=12; i++) {
+                const order = APP.restaurant.tableOrders[i] || {status:'free'};
+                const status = order.status;
+                let statusClass = 'free', emoji = '🪑', dot = 'dot-green';
+                if (status === 'ordering' || status === 'sent') { statusClass='ordering'; emoji='📝'; dot='dot-orange'; }
+                else if (status === 'eating' || status === 'ready-to-pay') { statusClass='occupied'; emoji='🍽️'; dot='dot-red'; }
+                else if (status === 'paid') { statusClass='paid'; emoji='✅'; dot=''; }
+                if (APP.restaurant.mode === 'dinein' && APP.restaurant.selectedTable === i) statusClass += ' selected';
+                html += `<div class="table-cell ${statusClass}" onclick="selectTable(${i})" title="Table ${i} — ${status.toUpperCase()}">
+                  <span class="table-status-dot ${dot}"></span>
+                  <span class="table-emoji">${emoji}</span>
+                  <span class="table-num">T${i}</span>
+                  <small style="font-size:0.6rem;">${status==='free'?'Free':status==='paid'?'Done':status.replace('-',' ')}</small>
+                </div>`;
+            }
+            grid.innerHTML = html;
+        }
+        function updateTakeawayUI() {
+            const card = document.getElementById('takeawayCard');
+            const form = document.getElementById('takeawayForm');
+            if (APP.restaurant.mode === 'takeaway' && APP.restaurant.takeawayCustomer) {
+                if (card) card.style.display = 'none';
+                if (form) form.style.display = 'none';
+            } else if (APP.restaurant.mode === 'takeaway' && !APP.restaurant.takeawayCustomer) {
+                if (card) card.style.display = 'none';
+                if (form) form.style.display = 'block';
+            } else {
+                if (card) card.style.display = 'block';
+                if (form) form.style.display = 'none';
+            }
+        }
+        function updatePOSInfoBadge() {
+            const textEl = document.getElementById('posInfoText');
+            const badgeEl = document.getElementById('posInfoBadge');
+            if (!textEl || !badgeEl) return;
+            const icon = badgeEl.querySelector('span:first-child');
+            if (APP.restaurant.mode === 'dinein' && APP.restaurant.selectedTable) {
+                const order = APP.restaurant.tableOrders[APP.restaurant.selectedTable] || {};
+                textEl.textContent = `Table ${APP.restaurant.selectedTable} — ${order.status ? order.status.replace('-',' ').toUpperCase() : 'FREE'}`;
+                if (icon) icon.textContent = order.status==='free' ? '🟢' : order.status==='paid' ? '⚪' : '🟠';
+            } else if (APP.restaurant.mode === 'takeaway' && APP.restaurant.takeawayCustomer) {
+                textEl.textContent = `Takeaway — ${APP.restaurant.takeawayCustomer.name || 'Customer'}`;
+                if (icon) icon.textContent = '🛍️';
+            } else {
+                textEl.textContent = APP.restaurant.mode === 'dinein' ? 'Select a table to start' : 'Set up takeaway order';
+                if (icon) icon.textContent = '🟢';
+            }
+        }
+        function setPOSMode(mode) {
+            APP.restaurant.mode = mode;
+            APP.restaurant.selectedTable = null;
+            APP.restaurant.currentOrderItems = [];
+            APP.restaurant.currentDiscount = 0;
+            if (mode === 'takeaway') APP.restaurant.takeawayCustomer = null;
+            document.querySelectorAll('.pos-mode-btn').forEach(b => b.classList.remove('active'));
+            const btn = document.querySelector(`.pos-mode-btn[data-mode="${mode}"]`);
+            if (btn) btn.classList.add('active');
+            updateTakeawayUI();
+            renderFullPOS();
+        }
+        function selectTable(tableNum) {
+            if (APP.restaurant.mode !== 'dinein') setPOSMode('dinein');
+            const order = APP.restaurant.tableOrders[tableNum] || { items:[], kotId:null, status:'free', orderId:null, discount:0, startTime:null };
+            if (order.status === 'paid') {
+                APP.restaurant.tableOrders[tableNum] = { items:[], kotId:null, status:'free', orderId:null, discount:0, startTime:null };
+            }
+            APP.restaurant.selectedTable = tableNum;
+            if (order.items && order.items.length > 0 && (order.status==='ordering'||order.status==='sent'||order.status==='eating'||order.status==='ready-to-pay')) {
+                APP.restaurant.currentOrderItems = [...order.items];
+                APP.restaurant.currentDiscount = order.discount || 0;
+            } else if (order.status === 'free') {
+                APP.restaurant.currentOrderItems = [];
+                APP.restaurant.currentDiscount = 0;
+                APP.restaurant.tableOrders[tableNum].status = 'ordering';
+                APP.restaurant.tableOrders[tableNum].startTime = new Date().toISOString();
+            } else {
+                APP.restaurant.currentOrderItems = [];
+                APP.restaurant.currentDiscount = 0;
+            }
+            updateTakeawayUI();
+            renderFullPOS();
+            showToast(`Table ${tableNum} selected`, 'info');
+        }
+        function initTakeawayOrder() {
+            setPOSMode('takeaway');
+            APP.restaurant.takeawayCustomer = null;
+            updateTakeawayUI();
+            renderFullPOS();
+        }
+        function confirmTakeaway() {
+            const name = document.getElementById('taCustName').value.trim();
+            const phone = document.getElementById('taCustPhone').value.trim();
+            if (!name) { showToast('Enter customer name', 'error'); return; }
+            APP.restaurant.takeawayCustomer = { name, phone: phone || 'N/A' };
+            APP.restaurant.currentOrderItems = [];
+            APP.restaurant.currentDiscount = 0;
+            APP.restaurant.orderCounter++;
+            updateTakeawayUI();
+            renderFullPOS();
+            showToast(`Takeaway order for ${name}`, 'success');
+        }
+        function cancelTakeaway() {
+            APP.restaurant.takeawayCustomer = null;
+            APP.restaurant.currentOrderItems = [];
+            APP.restaurant.currentDiscount = 0;
+            setPOSMode('dinein');
+            renderFullPOS();
+        }
+        function renderMenuCategories() {
+            const cats = [...new Set(APP.restaurant.menu.map(m => m.category))];
+            document.getElementById('menuCatTabs').innerHTML =
+                `<button class="menu-cat-tab active" data-cat="all" onclick="setMenuCategory('all',this)">📋 All</button>` +
+                cats.map(c => `<button class="menu-cat-tab" data-cat="${c}" onclick="setMenuCategory('${c}',this)">${c}</button>`).join('');
+        }
+        let currentMenuCat = 'all';
+        function setMenuCategory(cat, btn) {
+            currentMenuCat = cat;
+            document.querySelectorAll('.menu-cat-tab').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            filterMenuItems();
+        }
+        function filterMenuItems() {
+            const query = (document.getElementById('menuSearchInput')?.value || '').toLowerCase();
+            let items = APP.restaurant.menu;
+            if (currentMenuCat !== 'all') items = items.filter(m => m.category === currentMenuCat);
+            if (query) items = items.filter(m => m.name.toLowerCase().includes(query));
+            document.getElementById('menuItemsContainer').innerHTML = items.map(m => `
+            <div class="menu-item-card" onclick="addItemToOrder(${m.id})">
+              <span class="item-emoji">${m.emoji||'🍽️'}</span>
+              <div class="item-info"><span class="item-name">${m.name}</span><span class="item-cat">${m.category}</span></div>
+              <span class="item-price">₹${m.price}</span>
+              <button class="btn-add" onclick="event.stopPropagation();addItemToOrder(${m.id})">+</button>
+            </div>`).join('');
+        }
+        function addItemToOrder(itemId) {
+            const item = APP.restaurant.menu.find(m => m.id === itemId);
+            if (!item) return;
+            if (APP.restaurant.mode === 'dinein' && !APP.restaurant.selectedTable) { showToast('Select a table first!', 'error'); return; }
+            if (APP.restaurant.mode === 'takeaway' && !APP.restaurant.takeawayCustomer) { showToast('Set up takeaway customer first!', 'error'); return; }
+            const existing = APP.restaurant.currentOrderItems.find(i => i.id === itemId);
+            if (existing) { existing.qty = (existing.qty||1)+1; }
+            else { APP.restaurant.currentOrderItems.push({...item, qty:1}); }
+            if (APP.restaurant.mode === 'dinein' && APP.restaurant.selectedTable) {
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].items = [...APP.restaurant.currentOrderItems];
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].discount = APP.restaurant.currentDiscount;
+                if (APP.restaurant.tableOrders[APP.restaurant.selectedTable].status === 'free') {
+                    APP.restaurant.tableOrders[APP.restaurant.selectedTable].status = 'ordering';
+                    APP.restaurant.tableOrders[APP.restaurant.selectedTable].startTime = new Date().toISOString();
+                }
+            }
+            renderCurrentOrder();
+            renderTableGrid();
+            updatePOSInfoBadge();
+            showToast(`+ ${item.name}`, 'success');
+        }
+        function removeItemFromOrder(index) {
+            APP.restaurant.currentOrderItems.splice(index, 1);
+            syncOrderToTable();
+            renderCurrentOrder();
+            if (APP.restaurant.currentOrderItems.length === 0 && APP.restaurant.mode === 'dinein' && APP.restaurant.selectedTable) {
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].status = 'free';
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].items = [];
+                renderTableGrid();
+                updatePOSInfoBadge();
+            }
+        }
+        function changeItemQty(index, delta) {
+            const item = APP.restaurant.currentOrderItems[index];
+            if (!item) return;
+            item.qty = (item.qty||1) + delta;
+            if (item.qty <= 0) { removeItemFromOrder(index); return; }
+            syncOrderToTable();
+            renderCurrentOrder();
+        }
+        function syncOrderToTable() {
+            if (APP.restaurant.mode === 'dinein' && APP.restaurant.selectedTable) {
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].items = [...APP.restaurant.currentOrderItems];
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].discount = APP.restaurant.currentDiscount;
+            }
+        }
+        function renderCurrentOrder() {
+            const items = APP.restaurant.currentOrderItems;
+            const listEl = document.getElementById('orderItemsList');
+            if (items.length === 0) {
+                listEl.innerHTML = '<p style="color:var(--text2);text-align:center;padding:1rem;">No items in order</p>';
+            } else {
+                listEl.innerHTML = items.map((item,i) => `
+                  <div class="order-item-row">
+                    <span style="flex:1;font-weight:600;">${item.name}</span>
+                    <div class="qty-ctrl">
+                      <button onclick="changeItemQty(${i},-1)">−</button>
+                      <span style="min-width:20px;text-align:center;">${item.qty||1}</span>
+                      <button onclick="changeItemQty(${i},1)">+</button>
+                    </div>
+                    <span class="item-total">₹${item.price*(item.qty||1)}</span>
+                    <button style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:0.8rem;" onclick="removeItemFromOrder(${i})">✕</button>
+                  </div>`).join('');
+            }
+            const subtotal = items.reduce((s,i) => s + i.price*(i.qty||1), 0);
+            const gst = Math.round(subtotal * 0.05);
+            const discount = APP.restaurant.currentDiscount;
+            const total = Math.max(0, subtotal + gst - discount);
+            document.getElementById('orderSubtotal').textContent = '₹' + subtotal;
+            document.getElementById('orderGst').textContent = '₹' + gst;
+            document.getElementById('orderDiscount').textContent = '-₹' + discount;
+            document.getElementById('orderTotal').textContent = '₹' + total;
+            document.getElementById('btnSendKOT').disabled = items.length === 0;
+            document.getElementById('btnPayBill').disabled = items.length === 0;
+            const badgeEl = document.getElementById('orderTableBadge');
+            if (badgeEl) {
+                if (APP.restaurant.mode === 'dinein' && APP.restaurant.selectedTable) {
+                    badgeEl.innerHTML = `<span class="badge badge-info">Table ${APP.restaurant.selectedTable}</span>`;
+                } else if (APP.restaurant.mode === 'takeaway' && APP.restaurant.takeawayCustomer) {
+                    badgeEl.innerHTML = `<span class="badge badge-warning">🛍️ TA: ${APP.restaurant.takeawayCustomer.name}</span>`;
+                } else { badgeEl.innerHTML = ''; }
+            }
+            updatePOSInfoBadge();
+        }
+        function sendToKOT() {
+            const items = APP.restaurant.currentOrderItems;
+            if (items.length === 0) { showToast('Add items first!', 'error'); return; }
+            const subtotal = items.reduce((s,i)=>s+i.price*(i.qty||1),0);
+            const gst = Math.round(subtotal*0.05);
+            const total = Math.max(0, subtotal+gst-APP.restaurant.currentDiscount);
+            const kotId = 'KOT-'+Date.now().toString(36).toUpperCase().slice(-6);
+            const kotEntry = {
+                id: kotId,
+                table: APP.restaurant.mode==='dinein' ? 'T'+APP.restaurant.selectedTable : 'TA-'+(APP.restaurant.takeawayCustomer?.name||'N/A'),
+                mode: APP.restaurant.mode,
+                items: items.map(i=>({...i})),
+                total,
+                status: 'Preparing',
+                time: new Date().toLocaleTimeString(),
+                timestamp: Date.now()
+            };
+            APP.restaurant.kotOrders.unshift(kotEntry);
+            APP.admin.restaurantOrders.push(kotEntry);
+            if (APP.restaurant.mode==='dinein' && APP.restaurant.selectedTable) {
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].status = 'sent';
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].kotId = kotId;
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].orderId = kotId;
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].items = [...items];
+            }
+            APP.restaurant.dailySales += total;
+            saveState();
+            renderKOTSection();
+            renderTableGrid();
+            updatePOSInfoBadge();
+            spawnConfetti();
+            showToast(`📤 KOT ${kotId} sent!`, 'success');
+        }
+        function updateKOTStatus(kotId, newStatus) {
+            const kot = APP.restaurant.kotOrders.find(k=>k.id===kotId);
+            if (kot) {
+                kot.status = newStatus;
+                if (newStatus==='Served' && kot.mode==='dinein') {
+                    const tn = parseInt(kot.table.replace('T',''));
+                    if (APP.restaurant.tableOrders[tn]) APP.restaurant.tableOrders[tn].status = 'eating';
+                }
+                saveState();
+                renderKOTSection();
+                renderTableGrid();
+                updatePOSInfoBadge();
+                showToast(`KOT ${kotId} → ${newStatus}`, 'info');
+            }
+        }
+        function renderKOTSection() {
+            const area = document.getElementById('kotDisplayArea');
+            const active = APP.restaurant.kotOrders.filter(k=>k.status!=='Served');
+            if (active.length===0) {
+                area.innerHTML = '<p style="color:var(--text2);padding:0.5rem;">No active KOTs ✅</p>';
+                return;
+            }
+            area.innerHTML = active.map(k => {
+                const elapsed = Math.floor((Date.now()-k.timestamp)/60000);
+                const estr = elapsed>60 ? `${Math.floor(elapsed/60)}h ${elapsed%60}m` : `${elapsed}m ago`;
+                return `<div class="kot-ticket">
+                  <span>🧾 <strong>${k.id}</strong></span><span>📍 ${k.table}</span><span>📦 ${k.items.length} items</span><span>💰 ₹${k.total}</span><span>⏱️ ${estr}</span>
+                  <span class="kot-status ${k.status.toLowerCase()}">${k.status}</span>
+                  <select onchange="updateKOTStatus('${k.id}',this.value)" style="width:auto;padding:2px 6px;font-size:0.7rem;border-radius:10px;">
+                    <option ${k.status==='Preparing'?'selected':''}>Preparing</option>
+                    <option ${k.status==='Ready'?'selected':''}>Ready</option>
+                    <option ${k.status==='Served'?'selected':''}>Served</option>
+                  </select>
+                </div>`;
+            }).join('');
+        }
+        function clearAllKOTs() {
+            APP.restaurant.kotOrders = APP.restaurant.kotOrders.filter(k=>k.status!=='Served');
+            saveState();
+            renderKOTSection();
+            showToast('Cleared served KOTs', 'info');
+        }
+        function applyOrderDiscount() {
+            if (APP.restaurant.currentOrderItems.length===0) { showToast('Add items first!','error'); return; }
+            const subtotal = APP.restaurant.currentOrderItems.reduce((s,i)=>s+i.price*(i.qty||1),0);
+            APP.restaurant.currentDiscount = Math.round(subtotal*0.1);
+            syncOrderToTable();
+            renderCurrentOrder();
+            showToast('10% discount applied', 'success');
+        }
+        function splitBillPrompt() {
+            if (APP.restaurant.currentOrderItems.length===0) { showToast('Add items first!','error'); return; }
+            const ways = prompt('Split into how many ways? (2-10)', '2');
+            const num = parseInt(ways);
+            if (!num || num<2 || num>10) { showToast('Invalid number','error'); return; }
+            const subtotal = APP.restaurant.currentOrderItems.reduce((s,i)=>s+i.price*(i.qty||1),0);
+            const gst = Math.round(subtotal*0.05);
+            const total = Math.max(0, subtotal+gst-APP.restaurant.currentDiscount);
+            showToast(`💡 Split ${num} ways: ~₹${Math.round(total/num)} per person`, 'info');
+        }
+        function clearCurrentOrder() {
+            if (confirm('Clear current order?')) {
+                APP.restaurant.currentOrderItems = [];
+                APP.restaurant.currentDiscount = 0;
+                if (APP.restaurant.mode==='dinein' && APP.restaurant.selectedTable) {
+                    APP.restaurant.tableOrders[APP.restaurant.selectedTable].items = [];
+                    APP.restaurant.tableOrders[APP.restaurant.selectedTable].discount = 0;
+                    APP.restaurant.tableOrders[APP.restaurant.selectedTable].status = 'free';
+                }
+                renderCurrentOrder();
+                renderTableGrid();
+                updatePOSInfoBadge();
+                showToast('Order cleared', 'info');
+            }
+        }
+        function openPaymentModal() {
+            const items = APP.restaurant.currentOrderItems;
+            if (items.length===0) { showToast('Add items first!','error'); return; }
+            const subtotal = items.reduce((s,i)=>s+i.price*(i.qty||1),0);
+            const gst = Math.round(subtotal*0.05);
+            const total = Math.max(0, subtotal+gst-APP.restaurant.currentDiscount);
+            const modalContainer = document.getElementById('modalContainer');
+            modalContainer.innerHTML = `
+            <div class="payment-modal-overlay" id="paymentModalOverlay">
+              <div class="payment-modal">
+                <h3 style="font-family:var(--font-heading);color:var(--gold);text-align:center;">💳 Payment</h3>
+                <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:1rem;margin:0.5rem 0;">
+                  <p><strong>Items:</strong> ${items.length} | <strong>Total:</strong> <span style="color:var(--gold);font-size:1.3rem;">₹${total}</span></p>
+                  <p style="font-size:0.8rem;color:var(--text2);">Subtotal: ₹${subtotal} | GST: ₹${gst} | Discount: -₹${APP.restaurant.currentDiscount}</p>
+                </div>
+                <p style="font-weight:700;margin-top:0.5rem;">Select Payment Method:</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+                  <div class="glass-card" style="cursor:pointer;padding:1rem;" onclick="processPayment('UPI',${total})"><div style="font-size:2rem;">📱</div><strong>UPI</strong></div>
+                  <div class="glass-card" style="cursor:pointer;padding:1rem;" onclick="processPayment('Card',${total})"><div style="font-size:2rem;">💳</div><strong>Card</strong></div>
+                  <div class="glass-card" style="cursor:pointer;padding:1rem;" onclick="processPayment('Cash',${total})"><div style="font-size:2rem;">💵</div><strong>Cash</strong></div>
+                </div>
+                <button class="btn btn-outline btn-sm" style="width:100%;margin-top:0.8rem;" onclick="closePaymentModal()">Cancel</button>
+              </div>
+            </div>`;
+            document.getElementById('paymentModalOverlay').addEventListener('click', function(e) {
+                if (e.target === this) closePaymentModal();
+            });
+        }
+        function closePaymentModal() { document.getElementById('modalContainer').innerHTML = ''; }
+        function processPayment(method, total) {
+            closePaymentModal();
+            if (APP.restaurant.mode==='dinein' && APP.restaurant.selectedTable) {
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].status = 'paid';
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].items = [];
+                APP.restaurant.tableOrders[APP.restaurant.selectedTable].discount = 0;
+            }
+            APP.restaurant.dailySales += total;
+            APP.restaurant.currentOrderItems = [];
+            APP.restaurant.currentDiscount = 0;
+            if (APP.restaurant.mode==='takeaway') APP.restaurant.takeawayCustomer = null;
+            APP.restaurant.selectedTable = null;
+            saveState();
+            renderFullPOS();
+            spawnConfetti();
+            showToast(`✅ Payment of ₹${total} via ${method} successful!`, 'success');
+        }
+        function showPOSHelp() {
+            const modalContainer = document.getElementById('modalContainer');
+            modalContainer.innerHTML = `
+            <div class="payment-modal-overlay" id="helpModalOverlay">
+              <div class="payment-modal"><h3>🍽️ POS Help</h3>
+                <p><strong>Dine-In:</strong> Select table → Add items → Send to KOT → Pay</p>
+                <p><strong>Takeaway:</strong> Click Takeaway → Enter customer → Add items → Pay</p>
+                <button class="btn btn-gold btn-sm" style="width:100%;margin-top:0.5rem;" onclick="closePaymentModal()">Got it!</button>
+              </div>
+            </div>`;
+            document.getElementById('helpModalOverlay').addEventListener('click', function(e) { if (e.target===this) closePaymentModal(); });
+        }
+
+        // ============ BOOKING SYSTEM ============
+        function renderBookingStage() {
+            const container = document.getElementById('bookingStageContent');
+            const stage = APP.booking.stage;
+            updateStageIndicator(stage);
+            let html = '';
+            switch(stage) {
+                case 1: html = renderStage1(); break;
+                case 2: html = renderStage2(); break;
+                case 3: html = renderStage3(); break;
+                case 4: html = renderStage4(); break;
+                case 5: html = renderStage5(); break;
+                case 6: html = renderStage6(); break;
+            }
+            container.innerHTML = html;
+            attachStageEvents(stage);
+        }
+        function updateStageIndicator(current) {
+            document.querySelectorAll('#stageIndicator .stage-dot').forEach(d => {
+                const s = parseInt(d.dataset.stage);
+                d.classList.remove('active','completed');
+                if (s < current) d.classList.add('completed');
+                if (s === current) d.classList.add('active');
+            });
+        }
+        function renderStage1() {
+            return `<h3>🔵 Stage 1: Booking Basics</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div><label>Check-in Date & Time</label><input type="datetime-local" id="checkInInput" value="${APP.booking.checkIn}"></div>
+              <div><label>Check-out Date & Time</label><input type="datetime-local" id="checkOutInput" value="${APP.booking.checkOut}"></div>
+              <div><label>Number of Rooms</label><input type="number" id="roomsInput" min="1" max="10" value="${APP.booking.rooms}"></div>
+              <div><label>Total Members</label><input type="number" id="membersInput" min="1" max="50" value="${APP.booking.totalMembers}"></div>
+            </div>
+            <button class="btn btn-gold" style="margin-top:1.5rem;" id="stage1Continue">Continue → Guest Details</button>`;
+        }
+        function renderStage2() {
+            let memberForms = '';
+            for (let i=0; i<APP.booking.totalMembers; i++) {
+                const m = APP.booking.members[i] || {type:'Adult', name:'', age:'', mobile:'', email:'', aadhaar:'', pan:'', address:''};
+                memberForms += `<div class="member-card"><h4>👤 Member ${i+1}</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+                  <div><label>Type</label><select class="member-type" data-index="${i}"><option value="Adult" ${m.type==='Adult'?'selected':''}>Adult (18+)</option><option value="Child" ${m.type==='Child'?'selected':''}>Child (5–17)</option></select></div>
+                  <div><label>Name</label><input type="text" class="member-name" data-index="${i}" value="${m.name||''}"></div>
+                  <div><label>Age</label><input type="number" class="member-age" data-index="${i}" value="${m.age||''}" min="5"></div>
+                  <div id="memberExtra${i}">${renderMemberExtraFields(i,m)}</div>
+                </div></div>`;
+            }
+            return `<h3>🟣 Stage 2: Guest Details (${APP.booking.totalMembers} Members)</h3>${memberForms}<button class="btn btn-gold" style="margin-top:1rem;" id="stage2Save">💾 Save Members & Continue</button>`;
+        }
+        function renderMemberExtraFields(i, m) {
+            if (m.type === 'Child') return `<div><label>Aadhaar</label><input type="text" class="member-aadhaar" data-index="${i}" value="${m.aadhaar||''}"></div>`;
+            return `<div><label>Mobile</label><input type="text" class="member-mobile" data-index="${i}" value="${m.mobile||''}"></div><div><label>Email</label><input type="email" class="member-email" data-index="${i}" value="${m.email||''}"></div><div><label>Aadhaar</label><input type="text" class="member-aadhaar" data-index="${i}" value="${m.aadhaar||''}"></div><div><label>PAN</label><input type="text" class="member-pan" data-index="${i}" value="${m.pan||''}"></div><div><label>Address</label><input type="text" class="member-address" data-index="${i}" value="${m.address||''}"></div>`;
+        }
+        function renderStage3() {
+            const roomTypes = [
+                {type:'Deluxe',price:2499,icon:'🛏️',desc:'Cozy comfort'},{type:'Super Deluxe',price:3999,icon:'🛋️',desc:'Spacious & premium'},
+                {type:'Premium Suite',price:6499,icon:'💎',desc:'Luxury living'},{type:'Royal Suite',price:9999,icon:'👑',desc:'Ultimate royal experience'}
+            ];
+            let roomCards = roomTypes.map(r => {
+                const available = getAvailableRoomsByType(r.type);
+                const total = APP.admin.roomInventory.filter(rm=>rm.type===r.type).length;
+                const availCount = available.length;
+                const isFull = availCount===0;
+                const selected = APP.booking.selectedRoomType===r.type && !isFull ? 'selected' : '';
+                return `<div class="room-card ${selected} ${isFull?'unavailable':''}" data-type="${r.type}" data-price="${r.price}" onclick="${isFull?'showToast(\'No rooms available\',\'error\')':'selectRoomType(\''+r.type+'\',this)'}">
+                  <div style="font-size:3rem;">${r.icon}</div><h4>${r.type}</h4><p style="color:var(--gold);font-weight:700;">₹${r.price}/night</p>
+                  <p style="font-size:0.8rem;">${r.desc}</p>
+                  <span class="room-availability-badge ${isFull?'badge-booked':'badge-available'}">${isFull?'🔴 All Booked':'🟢 '+availCount+' / '+total+' Available'}</span>
+                </div>`;
+            }).join('');
+            // Room grid by floor
+            const floors = [...new Set(APP.admin.roomInventory.map(r=>r.floor))].sort();
+            let gridHtml = '<h4 style="margin-top:1.5rem;">🗺️ Room Availability Map</h4>';
+            floors.forEach(floor => {
+                const floorRooms = APP.admin.roomInventory.filter(r=>r.floor===floor);
+                gridHtml += `<div class="floor-section"><h4>🏢 Floor ${floor}</h4><div class="room-grid-theatre">`;
+                floorRooms.forEach(room => {
+                    let cellClass = room.status;
+                    let icon = getRoomTypeIcon(room.type);
+                    let click = '';
+                    if (room.status === 'available') click = `onclick="selectSpecificRoom('${room.id}')"`;
+                    if (room.status === 'maintenance') icon = '🔧';
+                    if (room.status === 'booked') icon = '🚫';
+                    if (APP.booking.selectedRoomId === room.id) cellClass += ' selected-room';
+                    gridHtml += `<div class="room-cell-theatre ${cellClass}" ${click} title="Room ${room.number} | ${room.type} | ${room.status.toUpperCase()} | ₹${room.price}">
+                      <span class="room-emoji">${icon}</span><span class="room-num">${room.number}</span><span class="room-floor">${room.type}</span><span style="font-size:0.55rem;">₹${room.price}</span>
+                    </div>`;
+                });
+                gridHtml += `</div></div>`;
+            });
+            const selectedInfo = APP.booking.selectedRoomId ? `<div class="glass-card" style="margin-top:1rem;background:rgba(200,148,62,0.1);text-align:center;"><strong>✅ Selected:</strong> Room ${APP.booking.selectedRoomNumber} | ${APP.booking.selectedRoomType}</div>` : '';
+            return `<h3>🟡 Stage 3: Select Your Room</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">${roomCards}</div>${gridHtml}${selectedInfo}<button class="btn btn-gold" style="margin-top:1.5rem;" id="stage3Continue" ${!APP.booking.selectedRoomId?'disabled':''}>Continue → Review</button>`;
+        }
+        function selectRoomType(type, cardEl) {
+            APP.booking.selectedRoomType = type;
+            APP.booking.selectedRoomId = '';
+            APP.booking.selectedRoomNumber = '';
+            APP.booking.selectedFloor = '';
+            document.querySelectorAll('.room-card').forEach(c => c.classList.remove('selected'));
+            if (cardEl) cardEl.classList.add('selected');
+            renderBookingStage();
+        }
+        function selectSpecificRoom(roomId) {
+            const room = getRoomById(roomId);
+            if (!room || room.status !== 'available') { showToast('Room not available', 'error'); return; }
+            APP.booking.selectedRoomId = roomId;
+            APP.booking.selectedRoomType = room.type;
+            APP.booking.selectedRoomNumber = room.number;
+            APP.booking.selectedFloor = room.floor;
+            renderBookingStage();
+            showToast(`Selected Room ${room.number}`, 'success');
+        }
+        function renderStage4() {
+            const b = APP.booking;
+            const room = getRoomById(b.selectedRoomId);
+            return `<h3>🟠 Stage 4: Booking Summary</h3>
+            <div class="glass-card" style="background:var(--surface2);">
+              <p><strong>Check-in:</strong> ${b.checkIn||'N/A'}</p><p><strong>Check-out:</strong> ${b.checkOut||'N/A'}</p>
+              <p><strong>Rooms:</strong> ${b.rooms} | <strong>Members:</strong> ${b.totalMembers}</p>
+              <p><strong>Room:</strong> ${b.selectedRoomType} — Room ${b.selectedRoomNumber}, Floor ${b.selectedFloor}</p>
+              <p><strong>Price:</strong> ₹${room?room.price:'—'}/night</p>
+            </div>
+            <label style="margin-top:1rem;"><input type="checkbox" id="agreeRules"> I agree to the hotel policies</label>
+            <button class="btn btn-gold" style="margin-top:1rem;" id="stage4Confirm" disabled>✅ Confirm & Proceed to Payment</button>`;
+        }
+        function renderStage5() {
+            return `<h3>🟠 Stage 5: Payment</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;text-align:center;">
+              <div class="glass-card" style="cursor:pointer;" id="payUpi"><div class="qr-display">📱</div><p><strong>UPI / QR</strong></p></div>
+              <div class="glass-card" style="cursor:pointer;" id="payCard"><div style="font-size:4rem;">💳</div><p><strong>Card</strong></p></div>
+              <div class="glass-card" style="cursor:pointer;" id="payAtHotel"><div style="font-size:4rem;">🏨</div><p><strong>Pay at Hotel</strong></p></div>
+            </div>`;
+        }
+        function renderStage6() {
+            const b = APP.booking;
+            return `<h3 style="text-align:center;">🎉 Booking Confirmed!</h3>
+            <div class="glass-card" style="text-align:center;background:var(--surface2);">
+              <div style="font-size:4rem;">✅</div>
+              <h2 style="color:var(--gold);">Booking ID: <span id="bookingIdDisplay">${b.bookingId}</span></h2>
+              <p>Room ${b.selectedRoomNumber} | ${b.selectedRoomType}</p>
+              <button class="btn btn-gold" style="margin:0.5rem;" onclick="downloadInvoice()">📥 Download Invoice</button>
+              <button class="btn btn-outline" style="margin:0.5rem;" onclick="shareWhatsApp()">💬 WhatsApp</button>
+              <button class="btn btn-accent" style="margin:0.5rem;" onclick="resetBooking()">🔄 New Booking</button>
+            </div>`;
+        }
+        function attachStageEvents(stage) {
+            if (stage===1) {
+                const btn = document.getElementById('stage1Continue');
+                if (btn) btn.onclick = () => {
+                    APP.booking.checkIn = document.getElementById('checkInInput').value;
+                    APP.booking.checkOut = document.getElementById('checkOutInput').value;
+                    APP.booking.rooms = parseInt(document.getElementById('roomsInput').value)||1;
+                    APP.booking.totalMembers = parseInt(document.getElementById('membersInput').value)||1;
+                    if (!APP.booking.checkIn || !APP.booking.checkOut) { showToast('Please fill dates','error'); return; }
+                    APP.booking.members = [];
+                    APP.booking.stage = 2;
+                    renderBookingStage();
+                };
+            }
+            if (stage===2) {
+                document.querySelectorAll('.member-type').forEach(sel => {
+                    sel.onchange = function() {
+                        const i = parseInt(this.dataset.index);
+                        const card = this.closest('.member-card');
+                        const extraDiv = card.querySelector(`[id^="memberExtra"]`);
+                        if (extraDiv) extraDiv.innerHTML = renderMemberExtraFields(i, {type: this.value});
+                    };
+                });
+                const saveBtn = document.getElementById('stage2Save');
+                if (saveBtn) saveBtn.onclick = () => {
+                    APP.booking.members = [];
+                    for (let i=0; i<APP.booking.totalMembers; i++) {
+                        const typeEl = document.querySelector(`.member-type[data-index="${i}"]`);
+                        const nameEl = document.querySelector(`.member-name[data-index="${i}"]`);
+                        const ageEl = document.querySelector(`.member-age[data-index="${i}"]`);
+                        const aadhaarEl = document.querySelector(`.member-aadhaar[data-index="${i}"]`);
+                        const type = typeEl ? typeEl.value : 'Adult';
+                        const member = {type, name: nameEl?nameEl.value:'', age: ageEl?ageEl.value:'', aadhaar: aadhaarEl?aadhaarEl.value:''};
+                        if (type==='Adult') {
+                            member.mobile = document.querySelector(`.member-mobile[data-index="${i}"]`)?.value||'';
+                            member.email = document.querySelector(`.member-email[data-index="${i}"]`)?.value||'';
+                            member.pan = document.querySelector(`.member-pan[data-index="${i}"]`)?.value||'';
+                            member.address = document.querySelector(`.member-address[data-index="${i}"]`)?.value||'';
+                        }
+                        APP.booking.members.push(member);
+                    }
+                    APP.booking.stage = 3;
+                    renderBookingStage();
+                };
+            }
+            if (stage===3) {
+                const btn3 = document.getElementById('stage3Continue');
+                if (btn3) btn3.onclick = () => {
+                    if (!APP.booking.selectedRoomId) { showToast('Please select a room','error'); return; }
+                    APP.booking.stage = 4;
+                    renderBookingStage();
+                };
+            }
+            if (stage===4) {
+                const agree = document.getElementById('agreeRules');
+                const confirmBtn = document.getElementById('stage4Confirm');
+                if (agree && confirmBtn) {
+                    agree.onchange = () => { confirmBtn.disabled = !agree.checked; };
+                    confirmBtn.onclick = () => { APP.booking.stage = 5; renderBookingStage(); };
+                }
+            }
+            if (stage===5) {
+                ['payUpi','payCard','payAtHotel'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.onclick = () => {
+                        APP.booking.bookingId = 'SSP-2026-' + Math.floor(Math.random()*9000+1000);
+                        APP.booking.stage = 6;
+                        const room = getRoomById(APP.booking.selectedRoomId);
+                        APP.admin.allBookings.push({
+                            id: APP.booking.bookingId, guest: APP.booking.members[0]?.name||'Guest',
+                            room: APP.booking.selectedRoomNumber, floor: APP.booking.selectedFloor,
+                            type: APP.booking.selectedRoomType, roomId: APP.booking.selectedRoomId,
+                            checkIn: APP.booking.checkIn, checkOut: APP.booking.checkOut,
+                            members: APP.booking.totalMembers, status:'Confirmed', timestamp: new Date().toISOString()
+                        });
+                        APP.admin.allCustomers.push(...APP.booking.members.map(m=>({...m, bookingId: APP.booking.bookingId})));
+                        markRoomBooked(APP.booking.selectedRoomId, APP.booking.bookingId);
+                        saveState();
+                        spawnConfetti();
+                        renderBookingStage();
+                    };
+                });
+            }
+        }
+        function resetBooking() {
+            APP.booking = { stage:1, checkIn:'', checkOut:'', rooms:1, totalMembers:1, members:[], selectedRoomType:'', selectedRoomNumber:'', selectedFloor:'', selectedRoomId:'', bookingId:'' };
+            renderBookingStage();
+        }
+        function downloadInvoice() {
+            const b = APP.booking;
+            const invoice = `INVOICE\nSILKY SPICIES HOTEL\nBudbud, West Bengal\n\nBooking ID: ${b.bookingId}\nRoom: ${b.selectedRoomNumber}\nThank you!\nCEO: Aritra Khan`;
+            const blob = new Blob([invoice], {type:'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href=url; a.download=`Invoice_${b.bookingId}.txt`; a.click();
+            showToast('Invoice downloaded', 'success');
+        }
+        function shareWhatsApp() {
+            const b = APP.booking;
+            window.open(`https://wa.me/?text=${encodeURIComponent(`🏨 Booking Confirmed at SILKY SPICIES!\nID: ${b.bookingId}\nRoom: ${b.selectedRoomNumber}\n📍 Budbud, West Bengal`)}`, '_blank');
+            showToast('Opening WhatsApp...', 'info');
+        }
+
+        // ============ ADMIN PANEL ============
+        function renderAdminPanel() {
+            document.getElementById('adminTotalBookings').textContent = APP.admin.allBookings.length;
+            const totalRev = APP.admin.allBookings.length*3500 + APP.admin.restaurantOrders.reduce((s,o)=>s+(o.total||0),0) + APP.restaurant.dailySales;
+            document.getElementById('adminTotalRevenue').textContent = '₹' + totalRev.toLocaleString();
+            document.getElementById('adminRestaurantSales').textContent = '₹' + (APP.admin.restaurantOrders.reduce((s,o)=>s+(o.total||0),0)+APP.restaurant.dailySales).toLocaleString();
+            const totalRooms = APP.admin.roomInventory.length;
+            const booked = APP.admin.roomInventory.filter(r=>r.status==='booked').length;
+            document.getElementById('adminOccupancy').textContent = totalRooms>0 ? Math.round(booked/totalRooms*100)+'%' : '0%';
+            renderAdminRoomGrid();
+            renderAdminFoodTable();
+            const tbody = document.querySelector('#adminBookingsTable tbody');
+            tbody.innerHTML = APP.admin.allBookings.slice(-10).reverse().map(b =>
+                `<tr><td><strong>${b.id}</strong></td><td>${b.guest}</td><td>${b.room} (${b.type||''})</td><td>${b.checkIn?.slice(0,10)||'N/A'}</td><td><span class="badge badge-success">${b.status}</span></td><td><button class="btn btn-xs btn-outline" onclick="cancelBooking('${b.id}')">Cancel</button></td></tr>`
+            ).join('') || '<tr><td colspan="6">No bookings yet</td></tr>';
+            const custTbody = document.querySelector('#customerDbTable tbody');
+            const uniqueCust = APP.admin.allCustomers.filter((c,i,arr)=> arr.findIndex(x=>x.aadhaar===c.aadhaar)===i);
+            custTbody.innerHTML = uniqueCust.slice(0,20).map(c =>
+                `<tr><td>${c.name||'N/A'}</td><td>${c.mobile||'N/A'}</td><td>${c.email||'N/A'}</td><td>${c.aadhaar||'N/A'}</td><td>1</td></tr>`
+            ).join('') || '<tr><td colspan="5">No customers yet</td></tr>';
+        }
+        function renderAdminRoomGrid() {
+            const gridEl = document.getElementById('adminRoomGrid');
+            const floors = [...new Set(APP.admin.roomInventory.map(r=>r.floor))].sort();
+            let html = '';
+            floors.forEach(floor => {
+                const floorRooms = APP.admin.roomInventory.filter(r=>r.floor===floor);
+                html += `<div class="floor-section"><div style="display:flex;justify-content:space-between;align-items:center;"><h4>🏢 Floor ${floor}</h4><span style="font-size:0.75rem;color:var(--text2);">${floorRooms.length} rooms</span></div><div class="room-grid-theatre">`;
+                floorRooms.forEach(room => {
+                    let cellClass = room.status;
+                    let icon = getRoomTypeIcon(room.type);
+                    if (room.status==='maintenance') icon='🔧';
+                    if (room.status==='booked') icon='🚫';
+                    html += `<div class="room-cell-theatre ${cellClass}" onclick="adminEditRoom('${room.id}')" title="Room ${room.number} | ${room.type} | ₹${room.price} | Click to edit">
+                      <span class="room-emoji">${icon}</span><span class="room-num">${room.number}</span><span class="room-floor">${room.type}</span><span style="font-size:0.55rem;">${room.status}</span>
+                    </div>`;
+                });
+                html += `</div></div>`;
+            });
+            html += `<p style="font-size:0.7rem;color:var(--text2);text-align:center;margin-top:0.5rem;">🟢 Available | 🔴 Booked | 🟠 Maintenance | Click to edit</p>`;
+            gridEl.innerHTML = html;
+        }
+        function showAddRoomForm() {
+            const formEl = document.getElementById('adminAddRoomForm');
+            formEl.style.display = 'block';
+            formEl.innerHTML = `<h4>➕ Add New Room</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+              <div><label>Room Number</label><input type="text" id="newRoomNumber" placeholder="e.g. 107"></div>
+              <div><label>Floor</label><input type="number" id="newRoomFloor" placeholder="1" min="1"></div>
+              <div><label>Type</label><select id="newRoomType"><option>Deluxe</option><option>Super Deluxe</option><option>Premium Suite</option><option>Royal Suite</option></select></div>
+              <div><label>Price/Night (₹)</label><input type="number" id="newRoomPrice" placeholder="2499" min="500"></div>
+              <div><label>Status</label><select id="newRoomStatus"><option value="available">Available</option><option value="maintenance">Maintenance</option></select></div>
+              <div><label>Amenities</label><input type="text" id="newRoomAmenities" placeholder="AC, TV, WiFi"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:0.8rem;">
+              <button class="btn btn-gold btn-sm" onclick="addNewRoom()">✅ Add Room</button>
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('adminAddRoomForm').style.display='none'">Cancel</button>
+            </div>`;
+        }
+        function addNewRoom() {
+            const number = document.getElementById('newRoomNumber').value.trim();
+            const floor = parseInt(document.getElementById('newRoomFloor').value);
+            const type = document.getElementById('newRoomType').value;
+            const price = parseInt(document.getElementById('newRoomPrice').value);
+            const status = document.getElementById('newRoomStatus').value;
+            const amenities = document.getElementById('newRoomAmenities').value.trim();
+            if (!number || !floor || !price) { showToast('Fill required fields','error'); return; }
+            if (APP.admin.roomInventory.find(r=>r.number===number && r.floor===floor)) { showToast('Room number exists','error'); return; }
+            const newRoom = { id:'R'+String(APP.admin.nextRoomId).padStart(3,'0'), number, floor, type, price, status, amenities:amenities||'AC, TV, WiFi' };
+            APP.admin.roomInventory.push(newRoom);
+            APP.admin.nextRoomId++;
+            saveState();
+            document.getElementById('adminAddRoomForm').style.display='none';
+            renderAdminRoomGrid();
+            showToast(`Room ${number} added!`, 'success');
+        }
+        function adminEditRoom(roomId) {
+            const room = APP.admin.roomInventory.find(r=>r.id===roomId);
+            if (!room) return;
+            const modalContainer = document.getElementById('modalContainer');
+            modalContainer.innerHTML = `<div class="payment-modal-overlay" id="editRoomOverlay">
+              <div class="payment-modal"><h3>✏️ Edit Room ${room.number}</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+                  <div><label>Room Number</label><input type="text" id="editRoomNumber" value="${room.number}"></div>
+                  <div><label>Floor</label><input type="number" id="editRoomFloor" value="${room.floor}" min="1"></div>
+                  <div><label>Type</label><select id="editRoomType">${['Deluxe','Super Deluxe','Premium Suite','Royal Suite'].map(t=>`<option ${room.type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+                  <div><label>Price/Night (₹)</label><input type="number" id="editRoomPrice" value="${room.price}" min="500"></div>
+                  <div><label>Status</label><select id="editRoomStatus"><option value="available" ${room.status==='available'?'selected':''}>Available</option><option value="booked" ${room.status==='booked'?'selected':''}>Booked</option><option value="maintenance" ${room.status==='maintenance'?'selected':''}>Maintenance</option></select></div>
+                  <div><label>Amenities</label><input type="text" id="editRoomAmenities" value="${room.amenities||''}"></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:0.8rem;">
+                  <button class="btn btn-gold btn-sm" onclick="saveRoomEdit('${roomId}')">💾 Save</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteRoom('${roomId}')">🗑️ Delete</button>
+                  <button class="btn btn-outline btn-sm" onclick="closePaymentModal()">Cancel</button>
+                </div>
+              </div>
+            </div>`;
+            document.getElementById('editRoomOverlay').addEventListener('click', function(e) { if (e.target===this) closePaymentModal(); });
+        }
+        function saveRoomEdit(roomId) {
+            const room = APP.admin.roomInventory.find(r=>r.id===roomId);
+            if (!room) return;
+            room.number = document.getElementById('editRoomNumber').value.trim();
+            room.floor = parseInt(document.getElementById('editRoomFloor').value);
+            room.type = document.getElementById('editRoomType').value;
+            room.price = parseInt(document.getElementById('editRoomPrice').value);
+            room.status = document.getElementById('editRoomStatus').value;
+            room.amenities = document.getElementById('editRoomAmenities').value.trim();
+            saveState();
+            closePaymentModal();
+            renderAdminRoomGrid();
+            showToast('Room updated!', 'success');
+        }
+        function deleteRoom(roomId) {
+            if (confirm('Delete this room permanently?')) {
+                APP.admin.roomInventory = APP.admin.roomInventory.filter(r=>r.id!==roomId);
+                saveState();
+                closePaymentModal();
+                renderAdminRoomGrid();
+                showToast('Room deleted.', 'info');
+            }
+        }
+        function renderAdminFoodTable() {
+            const container = document.getElementById('adminFoodTable');
+            const items = APP.restaurant.menu;
+            let html = `<table><thead><tr><th>ID</th><th>Emoji</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody>`;
+            items.forEach(item => {
+                html += `<tr><td>${item.id}</td><td style="font-size:1.3rem;">${item.emoji||'🍽️'}</td><td><strong>${item.name}</strong></td><td><span class="badge badge-info">${item.category}</span></td><td style="color:var(--gold);font-weight:700;">₹${item.price}</td><td style="display:flex;gap:4px;"><button class="btn btn-xs btn-outline" onclick="adminEditFood(${item.id})">✏️</button><button class="btn btn-xs btn-danger" onclick="adminDeleteFood(${item.id})">🗑️</button></td></tr>`;
+            });
+            html += `</tbody></table><p style="font-size:0.7rem;color:var(--text2);margin-top:0.5rem;">Total: ${items.length} items</p>`;
+            container.innerHTML = html;
+        }
+        function showAddFoodForm() {
+            const formEl = document.getElementById('adminAddFoodForm');
+            formEl.style.display = 'block';
+            const categories = [...new Set(APP.restaurant.menu.map(i=>i.category))];
+            formEl.innerHTML = `<h4>➕ Add Food Item</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+              <div><label>Name</label><input type="text" id="newFoodName" placeholder="Item name"></div>
+              <div><label>Emoji</label><input type="text" id="newFoodEmoji" placeholder="🍽️" maxlength="3"></div>
+              <div><label>Category</label><select id="newFoodCategory">${categories.map(c=>`<option>${c}</option>`).join('')}</select></div>
+              <div><label>Price (₹)</label><input type="number" id="newFoodPrice" placeholder="200" min="10"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:0.8rem;">
+              <button class="btn btn-gold btn-sm" onclick="addNewFoodItem()">✅ Add Item</button>
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('adminAddFoodForm').style.display='none'">Cancel</button>
+            </div>`;
+        }
+        function addNewFoodItem() {
+            const name = document.getElementById('newFoodName').value.trim();
+            const emoji = document.getElementById('newFoodEmoji').value.trim() || '🍽️';
+            const category = document.getElementById('newFoodCategory').value;
+            const price = parseInt(document.getElementById('newFoodPrice').value);
+            if (!name || !price) { showToast('Fill name and price','error'); return; }
+            const newItem = { id: APP.admin.nextFoodId, name, category, price, emoji };
+            APP.restaurant.menu.push(newItem);
+            APP.admin.nextFoodId++;
+            saveState();
+            document.getElementById('adminAddFoodForm').style.display = 'none';
+            renderAdminFoodTable();
+            renderMenuCategories();
+            filterMenuItems();
+            showToast(`${name} added!`, 'success');
+        }
+        function adminEditFood(itemId) {
+            const item = APP.restaurant.menu.find(i=>i.id===itemId);
+            if (!item) return;
+            const categories = [...new Set(APP.restaurant.menu.map(i=>i.category))];
+            const modalContainer = document.getElementById('modalContainer');
+            modalContainer.innerHTML = `<div class="payment-modal-overlay" id="editFoodOverlay">
+              <div class="payment-modal"><h3>✏️ Edit Food #${item.id}</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+                  <div><label>Name</label><input type="text" id="editFoodName" value="${item.name}"></div>
+                  <div><label>Emoji</label><input type="text" id="editFoodEmoji" value="${item.emoji||''}" maxlength="3"></div>
+                  <div><label>Category</label><select id="editFoodCategory">${categories.map(c=>`<option ${item.category===c?'selected':''}>${c}</option>`).join('')}</select></div>
+                  <div><label>Price (₹)</label><input type="number" id="editFoodPrice" value="${item.price}" min="10"></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:0.8rem;">
+                  <button class="btn btn-gold btn-sm" onclick="saveFoodEdit(${itemId})">💾 Save</button>
+                  <button class="btn btn-outline btn-sm" onclick="closePaymentModal()">Cancel</button>
+                </div>
+              </div>
+            </div>`;
+            document.getElementById('editFoodOverlay').addEventListener('click', function(e) { if (e.target===this) closePaymentModal(); });
+        }
+        function saveFoodEdit(itemId) {
+            const item = APP.restaurant.menu.find(i=>i.id===itemId);
+            if (!item) return;
+            item.name = document.getElementById('editFoodName').value.trim();
+            item.emoji = document.getElementById('editFoodEmoji').value.trim() || '🍽️';
+            item.category = document.getElementById('editFoodCategory').value;
+            item.price = parseInt(document.getElementById('editFoodPrice').value);
+            saveState();
+            closePaymentModal();
+            renderAdminFoodTable();
+            renderMenuCategories();
+            filterMenuItems();
+            showToast('Food updated!', 'success');
+        }
+        function adminDeleteFood(itemId) {
+            if (confirm('Delete this food item?')) {
+                APP.restaurant.menu = APP.restaurant.menu.filter(i=>i.id!==itemId);
+                saveState();
+                renderAdminFoodTable();
+                renderMenuCategories();
+                filterMenuItems();
+                showToast('Food deleted.', 'info');
+            }
+        }
+        function showAddCategoryForm() {
+            const formEl = document.getElementById('adminAddCategoryForm');
+            formEl.style.display = 'block';
+            formEl.innerHTML = `<h4>📁 New Category</h4><div><label>Category Name</label><input type="text" id="newCategoryName" placeholder="e.g. South Indian"></div>
+            <div style="display:flex;gap:8px;margin-top:0.8rem;"><button class="btn btn-gold btn-sm" onclick="addNewCategory()">✅ Create</button><button class="btn btn-outline btn-sm" onclick="document.getElementById('adminAddCategoryForm').style.display='none'">Cancel</button></div>`;
+        }
+        function addNewCategory() {
+            const name = document.getElementById('newCategoryName').value.trim();
+            if (!name) { showToast('Enter name','error'); return; }
+            if (APP.restaurant.menu.find(i=>i.category.toLowerCase()===name.toLowerCase())) { showToast('Category exists','error'); return; }
+            const placeholder = { id: APP.admin.nextFoodId, name: name+' Special', category: name, price: 150, emoji: '📁' };
+            APP.restaurant.menu.push(placeholder);
+            APP.admin.nextFoodId++;
+            saveState();
+            document.getElementById('adminAddCategoryForm').style.display='none';
+            renderAdminFoodTable();
+            renderMenuCategories();
+            filterMenuItems();
+            showToast(`Category "${name}" created!`, 'success');
+        }
+        function cancelBooking(id) {
+            const booking = APP.admin.allBookings.find(b=>b.id===id);
+            if (booking && booking.roomId) markRoomAvailable(booking.roomId);
+            APP.admin.allBookings = APP.admin.allBookings.filter(b=>b.id!==id);
+            saveState();
+            renderAdminPanel();
+            showToast('Booking cancelled: '+id, 'error');
+        }
+
+        // ============ DASHBOARD ============
+        function renderDashboard() {
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const data = months.map(()=>Math.floor(Math.random()*80000)+20000);
+            const maxVal = Math.max(...data);
+            document.getElementById('revenueChart').innerHTML = data.map(v => `<div class="chart-bar" style="height:${Math.round((v/maxVal)*160)}px;" title="₹${v.toLocaleString()}"></div>`).join('');
+            document.getElementById('revenueChartLabels').innerHTML = months.map(m=>`<span class="chart-bar-label">${m}</span>`).join('');
+            const foodCounts = {};
+            APP.admin.restaurantOrders.forEach(o => o.items && o.items.forEach(i => { foodCounts[i.name] = (foodCounts[i.name]||0)+1; }));
+            const topFood = Object.entries(foodCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+            document.getElementById('topFoodList').innerHTML = topFood.map(([n,c])=>`<p>🍽️ <strong>${n}</strong> — ${c} orders</p>`).join('') || '<p>No data yet</p>';
+            document.getElementById('bookingTrendsInfo').innerHTML = `
+            <p>📅 Total Bookings: <strong>${APP.admin.allBookings.length}</strong></p>
+            <p>🍽️ Restaurant Orders: <strong>${APP.admin.restaurantOrders.length}</strong></p>
+            <p>🏨 Rooms Available: <strong>${APP.admin.roomInventory.filter(r=>r.status==='available').length} / ${APP.admin.roomInventory.length}</strong></p>
+            <p>📊 Occupancy Trend: <strong>↑ Steady Growth</strong></p>
+            <p>⭐ Customer Satisfaction: <strong>4.8/5</strong></p>`;
+        }
+
+        // ============ FINAL INIT ============
+        function init() {
+            updateLogoutButton();
+            updateNavLockIcons();
+            navigateTo('home');
+            // pre-render some views in background
+            renderFullPOS();
+            renderAdminPanel();
+            renderDashboard();
+            console.log('🏨 SILKY SPICIES — System Ready | Budbud, West Bengal');
+        }
+        init();
+    </script>
+</body>
+</html>
